@@ -1,7 +1,7 @@
 <?php
  return array (
-  'About Us' => 'About Us',
-  'Dashboard' => 'Dashboard',
+  'About Us' => 'A propos',
+  'Dashboard' => 'Tableau de bord',
   'Existing Image' => 'Existing Image',
   'New Image' => 'New Image',
   'Description' => 'Description',
