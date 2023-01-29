@@ -168,6 +168,7 @@
   'Contact email is required' => 'Contact email is required',
   'Currency icon is required' => 'Currency icon is required',
   'Timezone is required' => 'Timezone is required',
+  'Default language is required' => 'Default language is required',
   'Allow is required' => 'Allow is required',
   'App id is required' => 'App id is required',
   'Widget Id is required' => 'Widget Id is required',
@@ -211,4 +212,3 @@
   'Withdraw request send successfully, please wait for admin approval' => 'Withdraw request send successfully, please wait for admin approval',
   'Your amount range is not available' => 'Your amount range is not available',
 );
- ?>

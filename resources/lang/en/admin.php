@@ -1,5 +1,5 @@
 <?php
- return array (
+return array(
   'About Us' => 'About Us',
   'Dashboard' => 'Dashboard',
   'Existing Image' => 'Existing Image',
@@ -505,6 +505,7 @@
   'Select Default Currency' => 'Select Default Currency',
   'Currency Icon' => 'Currency Icon',
   'Timezone' => 'Timezone',
+  'Default Language' => 'Default Language',
   'Existing Favicon' => 'Existing Favicon',
   'New Favicon' => 'New Favicon',
   'Theme Color One' => 'Theme Color One',
@@ -670,5 +671,6 @@
   'New withdraw' => 'New withdraw',
   'Withdraw Limit' => 'Withdraw Limit',
   'Withdraw charge' => 'Withdraw charge',
+  'English' => 'English',
+  'French' => 'French',
 );
- ?>
