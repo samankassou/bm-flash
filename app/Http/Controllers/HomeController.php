@@ -131,28 +131,38 @@ use App\Models\Footer;
 use App\Models\MaintainanceText;
 
 use Artisan;
-
-
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 
 {
+    public function websiteSetup()
+    {
+        $userLang = request()->header('locale');
+        /*  if (Auth::guard('api')->check()) {
+            $userLang = Auth::guard('api')->user()->default_language;
+            $defaultLang = $userLang;
+        } else {
+            $defaultLang = Setting::first()->value('default_language');
+        } */
+        $defaultLang = $userLang ?? 'en';
+        if (file_exists(resource_path("lang/$defaultLang/user.php"))) {
+            $language = include(resource_path("lang/$defaultLang/user.php"));
+        } else {
+            $language = include(resource_path('lang/en/user.php'));
+        }
 
-    public function websiteSetup(){
-
-        $language = include(resource_path('lang/en/user.php'));
-
-        $setting = Setting::select('logo','favicon','enable_user_register','enable_multivendor','text_direction','timezone','topbar_phone','topbar_email','currency_icon','currency_name','show_product_progressbar','theme_one','theme_two','seller_condition')->first();
+        $setting = Setting::select('logo', 'favicon', 'enable_user_register', 'enable_multivendor', 'text_direction', 'timezone', 'topbar_phone', 'topbar_email', 'currency_icon', 'currency_name', 'show_product_progressbar', 'theme_one', 'theme_two', 'seller_condition', 'default_language')->first();
 
         $announcementModal = AnnouncementModal::first();
 
-        $productCategories = Category::with('activeSubCategories.activeChildCategories')->where(['status' => 1])->select('id','name','slug','icon')->get();
+        $productCategories = Category::with('activeSubCategories.activeChildCategories')->where(['status' => 1])->select('id', 'name', 'slug', 'icon')->get();
 
-        $megaMenuCategories = MegaMenuCategory::with('category','subCategories.subCategory')->orderBy('serial','asc')->where('status',1)->get();
+        $megaMenuCategories = MegaMenuCategory::with('category', 'subCategories.subCategory')->orderBy('serial', 'asc')->where('status', 1)->get();
 
         $megaMenuBanner = BannerImage::find(23);
 
-        $customPages = CustomPage::where('status',1)->get();
+        $customPages = CustomPage::where('status', 1)->get();
 
         $googleAnalytic = GoogleAnalytic::first();
 
@@ -166,9 +176,9 @@ class HomeController extends Controller
 
 
 
-        $flashSale = FlashSale::select('status','offer','end_time')->first();
+        $flashSale = FlashSale::select('status', 'offer', 'end_time')->first();
 
-        $flashSaleProducts = FlashSaleProduct::where('status',1)->select('product_id')->get();
+        $flashSaleProducts = FlashSaleProduct::where('status', 1)->select('product_id')->get();
 
         $flashSaleActive = $flashSale->status == 1 ? true : false;
 
@@ -186,7 +196,7 @@ class HomeController extends Controller
 
 
 
-        $first_col_links = FooterLink::where('column',1)->get();
+        $first_col_links = FooterLink::where('column', 1)->get();
 
         $footer = Footer::first();
 
@@ -204,7 +214,7 @@ class HomeController extends Controller
 
 
 
-        $second_col_links = FooterLink::where('column',2)->get();
+        $second_col_links = FooterLink::where('column', 2)->get();
 
         $columnTitle = $footer->second_column;
 
@@ -220,7 +230,7 @@ class HomeController extends Controller
 
 
 
-        $third_col_links = FooterLink::where('column',3)->get();
+        $third_col_links = FooterLink::where('column', 3)->get();
 
         $columnTitle = $footer->third_column;
 
@@ -240,12 +250,12 @@ class HomeController extends Controller
 
 
 
-        $image_content = Setting::select('empty_cart','empty_wishlist', 'change_password_image', 'become_seller_avatar', 'become_seller_banner','login_image','error_page')->first();
+        $image_content = Setting::select('empty_cart', 'empty_wishlist', 'change_password_image', 'become_seller_avatar', 'become_seller_banner', 'login_image', 'error_page')->first();
 
 
 
         return response()->json([
-
+            'userLanguage' => $userLang,
             'language' => $language,
             'setting' => $setting,
 
@@ -292,83 +302,80 @@ class HomeController extends Controller
             'image_content' => $image_content,
 
         ]);
-
-
-
     }
 
 
 
-    public function subCategoriesByCategory($id){
+    public function subCategoriesByCategory($id)
+    {
 
         $subCategories = SubCategory::where(['category_id' => $id, 'status' => 1])->get();
 
         return response()->json(['subCategories' => $subCategories]);
-
     }
 
 
 
-    public function childCategoriesBySubCategory($id){
+    public function childCategoriesBySubCategory($id)
+    {
 
         $childCategories = ChildCategory::where(['sub_category_id' => $id, 'status' => 1])->get();
 
         return response()->json(['childCategories' => $childCategories]);
-
     }
 
 
 
-    public function categoryList(){
+    public function categoryList()
+    {
 
         $categories = Category::where('status', 1)->get();
 
         return response()->json(['categories' => $categories]);
-
     }
 
-    public function category($id){
+    public function category($id)
+    {
 
         $category = Category::find($id);
 
         return response()->json(['category' => $category]);
-
     }
 
 
 
 
 
-    public function subCategory($id){
+    public function subCategory($id)
+    {
 
         $sub_category = SubCategory::find($id);
 
         return response()->json(['sub_category' => $sub_category]);
-
     }
 
 
 
-    public function childCategory($id){
+    public function childCategory($id)
+    {
 
         $child_category = ChildCategory::find($id);
 
         return response()->json(['child_category' => $child_category]);
-
     }
 
 
 
 
 
-    public function productByCategory($id){
+    public function productByCategory($id)
+    {
 
         $category = Category::find($id);
 
-        $products = Product::with('activeVariants.activeVariantItems')->where(['category_id' => $id, 'status' => 1,'approve_by_admin' => 1])->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id')->orderBy('id','desc')->get();
+        $products = Product::with('activeVariants.activeVariantItems')->where(['category_id' => $id, 'status' => 1, 'approve_by_admin' => 1])->select('id', 'name', 'short_name', 'slug', 'thumb_image', 'qty', 'sold_qty', 'price', 'offer_price', 'is_undefine', 'is_featured', 'new_product', 'is_top', 'is_best', 'category_id', 'sub_category_id', 'child_category_id', 'brand_id')->orderBy('id', 'desc')->get();
 
         return response()->json(['category' => $category, 'products' => $products]);
-
     }
 
 
@@ -383,21 +390,21 @@ class HomeController extends Controller
 
         $sliderVisibilty = HomePageOneVisibility::find(1);
 
-        $sliders = Slider::orderBy('serial','asc')->where(['status' => 1])->get()->take($sliderVisibilty->qty);
+        $sliders = Slider::orderBy('serial', 'asc')->where(['status' => 1])->get()->take($sliderVisibilty->qty);
 
         $sliderVisibilty = $sliderVisibilty->status == 1 ? true : false;
 
 
 
-        $sliderBannerOne = BannerImage::select('id','product_slug','image','banner_location','title_one','title_two','badge','status')->find(16);
+        $sliderBannerOne = BannerImage::select('id', 'product_slug', 'image', 'banner_location', 'title_one', 'title_two', 'badge', 'status')->find(16);
 
-        $sliderBannerTwo = BannerImage::select('id','product_slug','image','banner_location','title_one','title_two','badge','status')->find(17);
+        $sliderBannerTwo = BannerImage::select('id', 'product_slug', 'image', 'banner_location', 'title_one', 'title_two', 'badge', 'status')->find(17);
 
 
 
         $serviceVisibilty = HomePageOneVisibility::find(2);
 
-        $services = Service::where('status',1)->get()->take($serviceVisibilty->qty);
+        $services = Service::where('status', 1)->get()->take($serviceVisibilty->qty);
 
         $serviceVisibilty = $serviceVisibilty->status == 1 ? true : false;
 
@@ -409,17 +416,16 @@ class HomeController extends Controller
 
         $category_arr = [];
 
-        foreach($popularCategories as $popularCategory){
+        foreach ($popularCategories as $popularCategory) {
 
             $category_arr[] = $popularCategory->category_id;
-
         }
 
         $setting = Setting::first();
 
 
 
-        $popularCategoryProducts = Product::with('activeVariants.activeVariantItems')->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id')->whereIn('category_id', $category_arr)->where('status',1)->where('approve_by_admin', 1)->orderBy('id','desc')->get()->take($popularCategoryVisibilty->qty);
+        $popularCategoryProducts = Product::with('activeVariants.activeVariantItems')->select('id', 'name', 'short_name', 'slug', 'thumb_image', 'qty', 'sold_qty', 'price', 'offer_price', 'is_undefine', 'is_featured', 'new_product', 'is_top', 'is_best', 'category_id', 'sub_category_id', 'child_category_id', 'brand_id')->whereIn('category_id', $category_arr)->where('status', 1)->where('approve_by_admin', 1)->orderBy('id', 'desc')->get()->take($popularCategoryVisibilty->qty);
 
         $popularCategoryVisibilty = $popularCategoryVisibilty->status == 1 ? true : false;
 
@@ -437,13 +443,13 @@ class HomeController extends Controller
 
         $flashSale = FlashSale::first();
 
-        $flashSaleSidebarBanner = BannerImage::select('id','product_slug as play_store','image','banner_location','status','title as app_store')->find(24);
+        $flashSaleSidebarBanner = BannerImage::select('id', 'product_slug as play_store', 'image', 'banner_location', 'status', 'title as app_store')->find(24);
 
 
 
         $topRatedVisibility = HomePageOneVisibility::find(6);
 
-        $topRatedProducts = Product::with('activeVariants.activeVariantItems')->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id')->where(['is_top' => 1, 'status' => 1,'approve_by_admin' => 1])->orderBy('id','desc')->get()->take($topRatedVisibility->qty);
+        $topRatedProducts = Product::with('activeVariants.activeVariantItems')->select('id', 'name', 'short_name', 'slug', 'thumb_image', 'qty', 'sold_qty', 'price', 'offer_price', 'is_undefine', 'is_featured', 'new_product', 'is_top', 'is_best', 'category_id', 'sub_category_id', 'child_category_id', 'brand_id')->where(['is_top' => 1, 'status' => 1, 'approve_by_admin' => 1])->orderBy('id', 'desc')->get()->take($topRatedVisibility->qty);
 
         $topRatedVisibility = $topRatedVisibility->status == 1 ? true : false;
 
@@ -451,15 +457,15 @@ class HomeController extends Controller
 
         $sellerVisibility = HomePageOneVisibility::find(7);
 
-        $sellers = Vendor::where(['status' => 1])->select('id','logo','banner_image','shop_name','slug')->get()->take($sellerVisibility->qty);
+        $sellers = Vendor::where(['status' => 1])->select('id', 'logo', 'banner_image', 'shop_name', 'slug')->get()->take($sellerVisibility->qty);
 
         $sellerVisibility = $sellerVisibility->status == 1 ? true : false;
 
 
 
-        $twoColumnBannerOne = BannerImage::select('id','product_slug','image','banner_location','status','title_one','title_two','badge')->find(19);
+        $twoColumnBannerOne = BannerImage::select('id', 'product_slug', 'image', 'banner_location', 'status', 'title_one', 'title_two', 'badge')->find(19);
 
-        $twoColumnBannerTwo = BannerImage::select('id','product_slug','image','banner_location','status','title_one','title_two','badge')->find(20);
+        $twoColumnBannerTwo = BannerImage::select('id', 'product_slug', 'image', 'banner_location', 'status', 'title_one', 'title_two', 'badge')->find(20);
 
 
 
@@ -473,47 +479,46 @@ class HomeController extends Controller
 
         $category_arr = [];
 
-        foreach($featuredCategories as $featuredCategory){
+        foreach ($featuredCategories as $featuredCategory) {
 
             $category_arr[] = $featuredCategory->category_id;
-
         }
 
 
 
 
 
-        $featuredCategoryProducts = Product::with('activeVariants.activeVariantItems')->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id')->whereIn('category_id', $category_arr)->where(['status' => 1,'approve_by_admin' => 1])->orderBy('id','desc')->get()->take($featuredProductVisibility->qty);
+        $featuredCategoryProducts = Product::with('activeVariants.activeVariantItems')->select('id', 'name', 'short_name', 'slug', 'thumb_image', 'qty', 'sold_qty', 'price', 'offer_price', 'is_undefine', 'is_featured', 'new_product', 'is_top', 'is_best', 'category_id', 'sub_category_id', 'child_category_id', 'brand_id')->whereIn('category_id', $category_arr)->where(['status' => 1, 'approve_by_admin' => 1])->orderBy('id', 'desc')->get()->take($featuredProductVisibility->qty);
 
         $featuredProductVisibility = $featuredProductVisibility->status == 1 ? true : false;
 
 
 
-        $singleBannerOne = BannerImage::select('id','product_slug','image','banner_location','status','title_one','title_two')->find(21);
+        $singleBannerOne = BannerImage::select('id', 'product_slug', 'image', 'banner_location', 'status', 'title_one', 'title_two')->find(21);
 
 
 
         $newArrivalProductVisibility = HomePageOneVisibility::find(9);
 
-        $newArrivalProducts = Product::with('activeVariants.activeVariantItems')->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id')->where(['new_product' => 1, 'status' => 1, 'approve_by_admin' => 1])->orderBy('id','desc')->get()->take($newArrivalProductVisibility->qty);
+        $newArrivalProducts = Product::with('activeVariants.activeVariantItems')->select('id', 'name', 'short_name', 'slug', 'thumb_image', 'qty', 'sold_qty', 'price', 'offer_price', 'is_undefine', 'is_featured', 'new_product', 'is_top', 'is_best', 'category_id', 'sub_category_id', 'child_category_id', 'brand_id')->where(['new_product' => 1, 'status' => 1, 'approve_by_admin' => 1])->orderBy('id', 'desc')->get()->take($newArrivalProductVisibility->qty);
 
         $newArrivalProductVisibility = $newArrivalProductVisibility->status == 1 ? true : false;
 
 
 
-        $singleBannerTwo = BannerImage::select('id','product_slug','image','banner_location','status','title_one')->find(22);
+        $singleBannerTwo = BannerImage::select('id', 'product_slug', 'image', 'banner_location', 'status', 'title_one')->find(22);
 
 
 
         $bestProductVisibility = HomePageOneVisibility::find(10);
 
-        $bestProducts = Product::with('activeVariants.activeVariantItems')->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id')->where(['is_best' => 1, 'status' => 1, 'approve_by_admin' => 1])->orderBy('id','desc')->get()->take($bestProductVisibility->qty);
+        $bestProducts = Product::with('activeVariants.activeVariantItems')->select('id', 'name', 'short_name', 'slug', 'thumb_image', 'qty', 'sold_qty', 'price', 'offer_price', 'is_undefine', 'is_featured', 'new_product', 'is_top', 'is_best', 'category_id', 'sub_category_id', 'child_category_id', 'brand_id')->where(['is_best' => 1, 'status' => 1, 'approve_by_admin' => 1])->orderBy('id', 'desc')->get()->take($bestProductVisibility->qty);
 
         $bestProductVisibility = $bestProductVisibility->status == 1 ? true : false;
 
 
 
-        $subscriptionBanner = BannerImage::select('id','image','banner_location','header','title')->find(27);
+        $subscriptionBanner = BannerImage::select('id', 'image', 'banner_location', 'header', 'title')->find(27);
 
 
 
@@ -529,7 +534,7 @@ class HomeController extends Controller
 
 
 
-        $homepage_categories = Category::where(['status' => 1])->select('id','name','slug','icon','image')->get()->take(15);
+        $homepage_categories = Category::where(['status' => 1])->select('id', 'name', 'slug', 'icon', 'image')->get()->take(15);
 
 
 
@@ -606,12 +611,12 @@ class HomeController extends Controller
             'subscriptionBanner' => $subscriptionBanner,
 
         ]);
-
     }
 
 
 
-    public function aboutUs(){
+    public function aboutUs()
+    {
 
         $aboutUs = AboutUs::first();
 
@@ -619,9 +624,9 @@ class HomeController extends Controller
 
         $testimonials = Testimonial::where(['status' => 1])->get();
 
-        $services = Service::where('status',1)->get();
+        $services = Service::where('status', 1)->get();
 
-        $blogs = PopularPost::with('blog.activeComments')->where('status',1)->orderBy('id','desc')->get()->take(10);
+        $blogs = PopularPost::with('blog.activeComments')->where('status', 1)->orderBy('id', 'desc')->get()->take(10);
 
 
 
@@ -638,12 +643,12 @@ class HomeController extends Controller
             'blogs' => $blogs,
 
         ]);
-
     }
 
 
 
-    public function contactUs(){
+    public function contactUs()
+    {
 
         $contact = ContactPage::first();
 
@@ -662,24 +667,24 @@ class HomeController extends Controller
             'seoSetting' => $seoSetting
 
         ]);
-
     }
 
 
 
-    public function sendContactMessage(Request $request){
+    public function sendContactMessage(Request $request)
+    {
 
         $rules = [
 
-            'name'=>'required',
+            'name' => 'required',
 
-            'email'=>'required',
+            'email' => 'required',
 
-            'subject'=>'required',
+            'subject' => 'required',
 
-            'message'=>'required',
+            'message' => 'required',
 
-            'g-recaptcha-response'=>new Captcha()
+            'g-recaptcha-response' => new Captcha()
 
         ];
 
@@ -689,7 +694,7 @@ class HomeController extends Controller
 
         $setting = Setting::first();
 
-        if($setting->enable_save_contact_message == 1){
+        if ($setting->enable_save_contact_message == 1) {
 
             $contact = new ContactMessage();
 
@@ -704,65 +709,62 @@ class HomeController extends Controller
             $contact->message = $request->message;
 
             $contact->save();
-
         }
 
 
 
         MailHelper::setMailConfig();
 
-        $template = EmailTemplate::where('id',2)->first();
+        $template = EmailTemplate::where('id', 2)->first();
 
         $message = $template->description;
 
         $subject = $template->subject;
 
-        $message = str_replace('{{name}}',$request->name,$message);
+        $message = str_replace('{{name}}', $request->name, $message);
 
-        $message = str_replace('{{email}}',$request->email,$message);
+        $message = str_replace('{{email}}', $request->email, $message);
 
-        $message = str_replace('{{phone}}',$request->phone,$message);
+        $message = str_replace('{{phone}}', $request->phone, $message);
 
-        $message = str_replace('{{subject}}',$request->subject,$message);
+        $message = str_replace('{{subject}}', $request->subject, $message);
 
-        $message = str_replace('{{message}}',$request->message,$message);
+        $message = str_replace('{{message}}', $request->message, $message);
 
 
 
-        Mail::to($setting->contact_email)->send(new ContactMessageInformation($message,$subject));
+        Mail::to($setting->contact_email)->send(new ContactMessageInformation($message, $subject));
 
 
 
         $notification = trans('user_validation.Message send successfully');
 
         return response()->json(['notification' => $notification]);
-
     }
 
 
 
-    public function blog(Request $request){
+    public function blog(Request $request)
+    {
 
         $paginateQty = CustomPagination::whereId('1')->first()->qty;
 
-        $blogs = Blog::with('activeComments')->orderBy('id','desc')->where(['status' => 1]);
+        $blogs = Blog::with('activeComments')->orderBy('id', 'desc')->where(['status' => 1]);
 
 
 
-        if($request->search){
+        if ($request->search) {
 
-            $blogs = $blogs->where('title','LIKE','%'.$request->search.'%');
-
+            $blogs = $blogs->where('title', 'LIKE', '%' . $request->search . '%');
         }
 
 
 
-        if($request->category){
+        if ($request->category) {
 
-            $category = BlogCategory::where('slug',$request->category)->first();
+            $category = BlogCategory::where('slug', $request->category)->first();
 
             $blogs = $blogs->where('blog_category_id', $category->id);
-
         }
 
 
@@ -774,14 +776,14 @@ class HomeController extends Controller
 
 
         return response()->json(['blogs' => $blogs, 'seoSetting' => $seoSetting]);
-
     }
 
 
 
-    public function blogDetail($slug){
+    public function blogDetail($slug)
+    {
 
-        $blog = Blog::where(['status' => 1, 'slug'=>$slug])->first();
+        $blog = Blog::where(['status' => 1, 'slug' => $slug])->first();
 
         $blog->views += 1;
 
@@ -803,29 +805,29 @@ class HomeController extends Controller
 
         $paginateQty = CustomPagination::whereId('4')->first()->qty;
 
-        $activeComments = BlogComment::where('blog_id', $blog->id)->orderBy('id','desc')->paginate($paginateQty);
+        $activeComments = BlogComment::where('blog_id', $blog->id)->orderBy('id', 'desc')->paginate($paginateQty);
 
 
 
         return response()->json(['blog' => $blog, 'popularPosts' => $popularPosts, 'categories' => $categories, 'recaptchaSetting' => $recaptchaSetting, 'activeComments' => $activeComments]);
-
     }
 
 
 
-    public function blogComment(Request $request){
+    public function blogComment(Request $request)
+    {
 
         $rules = [
 
-            'name'=>'required',
+            'name' => 'required',
 
-            'email'=>'required',
+            'email' => 'required',
 
-            'comment'=>'required',
+            'comment' => 'required',
 
-            'blog_id'=>'required',
+            'blog_id' => 'required',
 
-            'g-recaptcha-response'=>new Captcha()
+            'g-recaptcha-response' => new Captcha()
 
         ];
 
@@ -851,90 +853,86 @@ class HomeController extends Controller
 
 
 
-        return response()->json(['message' => $notification],200);
-
+        return response()->json(['message' => $notification], 200);
     }
 
 
 
-    public function faq(){
+    public function faq()
+    {
 
-        $faqs = FAQ::orderBy('id','desc')->where('status',1)->get();
+        $faqs = FAQ::orderBy('id', 'desc')->where('status', 1)->get();
 
         return response()->json(['faqs' => $faqs]);
-
     }
 
 
 
-    public function trackOrderResponse($id){
+    public function trackOrderResponse($id)
+    {
 
-        if(!$id){
+        if (!$id) {
 
             $message = trans('user_validation.Order id is required');
 
-            return response()->json(['status'=> 0, 'message' => $message]);
-
+            return response()->json(['status' => 0, 'message' => $message]);
         }
 
-        $order = Order::where('order_id',$id)->first();
+        $order = Order::where('order_id', $id)->first();
 
-        if($order){
+        if ($order) {
 
 
 
-            return response()->json(['order'=> $order]);
-
-        }else{
+            return response()->json(['order' => $order]);
+        } else {
 
             $message = trans('user_validation.Order not found');
 
-            return response()->json(['status'=> 0, 'message' => $message]);
-
+            return response()->json(['status' => 0, 'message' => $message]);
         }
-
     }
 
 
 
 
 
-    public function allCustomPage(){
+    public function allCustomPage()
+    {
 
         $pages = CustomPage::where(['status' => 1])->get();
 
-        return response()->json(['pages'=> $pages]);
-
+        return response()->json(['pages' => $pages]);
     }
 
 
 
-    public function customPage($slug){
+    public function customPage($slug)
+    {
 
         $page = CustomPage::where(['slug' => $slug, 'status' => 1])->first();
 
-        return response()->json(['page'=> $page]);
-
+        return response()->json(['page' => $page]);
     }
 
 
 
-    public function termsAndCondition(){
+    public function termsAndCondition()
+    {
 
         $terms_conditions = TermsAndCondition::select('terms_and_condition')->first();
 
-        return response()->json(['terms_conditions'=> $terms_conditions]);
-
+        return response()->json(['terms_conditions' => $terms_conditions]);
     }
 
 
 
-    public function sellerTemsCondition(){
+    public function sellerTemsCondition()
+    {
 
         $seller_tems_conditions = Setting::select('seller_condition')->first();
 
-        return response()->json(['seller_tems_conditions'=> $seller_tems_conditions]);
-
+        return response()->json(['seller_tems_conditions' => $seller_tems_conditions]);
     }
 
 
@@ -943,21 +941,22 @@ class HomeController extends Controller
 
 
 
-    public function privacyPolicy(){
+    public function privacyPolicy()
+    {
 
         $privacyPolicy = TermsAndCondition::select('privacy_policy')->first();
 
-        return response()->json(['privacyPolicy'=> $privacyPolicy]);
-
+        return response()->json(['privacyPolicy' => $privacyPolicy]);
     }
 
 
 
-    public function seller(){
+    public function seller()
+    {
 
 
 
-        $sellers = Vendor::orderBy('id','desc')->where('status',1)->select('id','banner_image','shop_name','slug','open_at','closed_at','address','email','logo','phone')->paginate(20);
+        $sellers = Vendor::orderBy('id', 'desc')->where('status', 1)->select('id', 'banner_image', 'shop_name', 'slug', 'open_at', 'closed_at', 'address', 'email', 'logo', 'phone')->paginate(20);
 
         $seoSetting = SeoSetting::find(5);
 
@@ -970,23 +969,20 @@ class HomeController extends Controller
             'seoSetting' => $seoSetting,
 
         ]);
-
-
-
     }
 
 
 
-    public function sellerDetail(Request $request, $shop_name){
+    public function sellerDetail(Request $request, $shop_name)
+    {
 
         $slug = $shop_name;
 
-        $seller = Vendor::where(['status' => 1, 'slug' => $slug])->select('id','banner_image','shop_name','slug','open_at','closed_at','address','email','phone','seo_title','seo_description','logo')->first();
+        $seller = Vendor::where(['status' => 1, 'slug' => $slug])->select('id', 'banner_image', 'shop_name', 'slug', 'open_at', 'closed_at', 'address', 'email', 'phone', 'seo_title', 'seo_description', 'logo')->first();
 
-        if(!$seller){
+        if (!$seller) {
 
-            return response()->json(['message' => 'Seller not found'],403);
-
+            return response()->json(['message' => 'Seller not found'], 403);
         }
 
 
@@ -995,72 +991,67 @@ class HomeController extends Controller
 
         $searchBrandArr = [];
 
-        $categories = Category::with('activeSubCategories.activeChildCategories')->where(['status' => 1])->select('id','name','slug','icon')->get();
+        $categories = Category::with('activeSubCategories.activeChildCategories')->where(['status' => 1])->select('id', 'name', 'slug', 'icon')->get();
 
-        $brands = Brand::where(['status' => 1])->select('id','name','slug')->get();
+        $brands = Brand::where(['status' => 1])->select('id', 'name', 'slug')->get();
 
-        $activeVariants = ProductVariant::with('activeVariantItems')->select('name','id')->groupBy('name')->get();
+        $activeVariants = ProductVariant::with('activeVariantItems')->select('name', 'id')->groupBy('name')->get();
 
 
 
         $paginateQty = CustomPagination::whereId('2')->first()->qty;
 
-        $products = Product::with('activeVariants.activeVariantItems')->orderBy('id','desc')->where(['status' => 1, 'vendor_id' => $seller->id, 'approve_by_admin' => 1]);
+        $products = Product::with('activeVariants.activeVariantItems')->orderBy('id', 'desc')->where(['status' => 1, 'vendor_id' => $seller->id, 'approve_by_admin' => 1]);
 
 
 
-        if($request->category) {
+        if ($request->category) {
 
-            $category = Category::where('slug',$request->category)->first();
+            $category = Category::where('slug', $request->category)->first();
 
             $products = $products->where('category_id', $category->id);
 
             $searchCategoryArr[] = $category->id;
-
         }
 
 
 
-        if($request->sub_category) {
+        if ($request->sub_category) {
 
-            $sub_category = SubCategory::where('slug',$request->sub_category)->first();
+            $sub_category = SubCategory::where('slug', $request->sub_category)->first();
 
             $products = $products->where('sub_category_id', $sub_category->id);
 
             $searchCategoryArr[] = $sub_category->category_id;
-
         }
 
 
 
-        if($request->child_category) {
+        if ($request->child_category) {
 
-            $child_category = ChildCategory::where('slug',$request->child_category)->first();
+            $child_category = ChildCategory::where('slug', $request->child_category)->first();
 
             $products = $products->where('child_category_id', $child_category->id);
 
             $searchCategoryArr[] = $child_category->category_id;
-
         }
 
 
 
-        if($request->brand) {
+        if ($request->brand) {
 
-            $brand = Brand::where('slug',$request->brand)->first();
+            $brand = Brand::where('slug', $request->brand)->first();
 
             $products = $products->where('brand_id', $brand->id);
 
             $searchBrandArr[] = $brand->id;
-
         }
 
 
 
-        if($request->search) {
+        if ($request->search) {
 
-            $products = $products->where('name','LIKE','%'.$request->search.'%');
-
+            $products = $products->where('name', 'LIKE', '%' . $request->search . '%');
         }
 
 
@@ -1069,31 +1060,29 @@ class HomeController extends Controller
 
 
 
-        $products = $products->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id');
+        $products = $products->select('id', 'name', 'short_name', 'slug', 'thumb_image', 'qty', 'sold_qty', 'price', 'offer_price', 'is_undefine', 'is_featured', 'new_product', 'is_top', 'is_best', 'category_id', 'sub_category_id', 'child_category_id', 'brand_id');
 
-        if($request->per_page){
+        if ($request->per_page) {
 
             $products = $products->paginate($request->per_page);
-
-        }else{
+        } else {
 
             $products = $products->paginate($paginateQty);
-
         }
 
         $products = $products->appends($request->all());
 
 
 
-        $sellerReviewQty = ProductReview::where('status',1)->where('product_vendor_id',$seller->id)->count();
+        $sellerReviewQty = ProductReview::where('status', 1)->where('product_vendor_id', $seller->id)->count();
 
-        $sellerTotalReview = ProductReview::where('status',1)->where('product_vendor_id',$seller->id)->sum('rating');
+        $sellerTotalReview = ProductReview::where('status', 1)->where('product_vendor_id', $seller->id)->sum('rating');
 
 
 
-        $shopPageCenterBanner = BannerImage::select('product_slug','image','banner_location','status','after_product_qty','title_one')->find(25);
+        $shopPageCenterBanner = BannerImage::select('product_slug', 'image', 'banner_location', 'status', 'after_product_qty', 'title_one')->find(25);
 
-        $shopPageSidebarBanner = BannerImage::select('product_slug','image','banner_location','status','title_one','title_two')->find(26);
+        $shopPageSidebarBanner = BannerImage::select('product_slug', 'image', 'banner_location', 'status', 'title_one', 'title_two')->find(26);
 
 
 
@@ -1122,75 +1111,72 @@ class HomeController extends Controller
             'shopPageSidebarBanner' => $shopPageSidebarBanner,
 
         ]);
-
     }
 
 
 
-    public function variantItemsByVariant($name){
+    public function variantItemsByVariant($name)
+    {
 
-        $variantItemsForSearch = ProductVariantItem::with('product','variant')->groupBy('name')->select('name','id')->where('product_variant_name', $name)->get();
+        $variantItemsForSearch = ProductVariantItem::with('product', 'variant')->groupBy('name')->select('name', 'id')->where('product_variant_name', $name)->get();
 
 
 
         return response()->json(['variantItemsForSearch' => $variantItemsForSearch]);
-
     }
 
 
 
-    public function product(Request $request){
+    public function product(Request $request)
+    {
 
         $searchCategoryArr = [];
 
         $searchBrandArr = [];
 
-        $categories = Category::with('activeSubCategories.activeChildCategories')->where(['status' => 1])->select('id','name','slug','icon')->get();
+        $categories = Category::with('activeSubCategories.activeChildCategories')->where(['status' => 1])->select('id', 'name', 'slug', 'icon')->get();
 
-        $brands = Brand::where(['status' => 1])->select('id','name','slug')->get();
+        $brands = Brand::where(['status' => 1])->select('id', 'name', 'slug')->get();
 
-        $activeVariants = ProductVariant::with('activeVariantItems')->select('name','id')->groupBy('name')->get();
+        $activeVariants = ProductVariant::with('activeVariantItems')->select('name', 'id')->groupBy('name')->get();
 
 
 
         $paginateQty = CustomPagination::whereId('2')->first()->qty;
 
-        $products = Product::with('activeVariants.activeVariantItems')->orderBy('id','desc')->where(['status' => 1, 'approve_by_admin' => 1]);
+        $products = Product::with('activeVariants.activeVariantItems')->orderBy('id', 'desc')->where(['status' => 1, 'approve_by_admin' => 1]);
 
 
 
-        if($request->category) {
+        if ($request->category) {
 
-            $category = Category::where('slug',$request->category)->first();
+            $category = Category::where('slug', $request->category)->first();
 
             $products = $products->where('category_id', $category->id);
 
             $searchCategoryArr[] = $category->id;
-
         }
 
 
 
-        if($request->sub_category) {
+        if ($request->sub_category) {
 
-            $sub_category = SubCategory::where('slug',$request->sub_category)->first();
+            $sub_category = SubCategory::where('slug', $request->sub_category)->first();
 
             $products = $products->where('sub_category_id', $sub_category->id);
 
             $searchCategoryArr[] = $sub_category->category_id;
-
         }
 
 
 
-        if($request->child_category) {
+        if ($request->child_category) {
 
-            $child_category = ChildCategory::where('slug',$request->child_category)->first();
+            $child_category = ChildCategory::where('slug', $request->child_category)->first();
 
             $products = $products->where('child_category_id', $child_category->id);
 
             $searchCategoryArr[] = $child_category->category_id;
-
         }
 
 
@@ -1199,85 +1185,74 @@ class HomeController extends Controller
 
         $popularCategoryArr = [];
 
-        if($request->highlight){
+        if ($request->highlight) {
 
 
 
-            if($request->highlight == 'popular_category'){
+            if ($request->highlight == 'popular_category') {
 
                 $pop_categories = PopularCategory::all();
 
-                foreach($pop_categories as $pop_category){
+                foreach ($pop_categories as $pop_category) {
 
                     $popularCategoryArr[] = $pop_category->category_id;
-
                 }
 
                 $products = $products->whereIn('category_id', $popularCategoryArr);
-
             }
 
 
 
-            if($request->highlight == 'top_product'){
+            if ($request->highlight == 'top_product') {
 
-                $products = $products->where('is_top',1);
-
+                $products = $products->where('is_top', 1);
             }
 
 
 
-            if($request->highlight == 'new_arrival'){
+            if ($request->highlight == 'new_arrival') {
 
-                $products = $products->where('new_product',1);
-
+                $products = $products->where('new_product', 1);
             }
 
 
 
-            if($request->highlight == 'featured_product'){
+            if ($request->highlight == 'featured_product') {
 
-                $products = $products->where('is_featured',1);
-
+                $products = $products->where('is_featured', 1);
             }
 
 
 
-            if($request->highlight == 'best_product'){
+            if ($request->highlight == 'best_product') {
 
-                $products = $products->where('is_best',1);
-
+                $products = $products->where('is_best', 1);
             }
-
-
-
         }
 
 
 
 
 
-        if($request->brand) {
+        if ($request->brand) {
 
-            $brand = Brand::where('slug',$request->brand)->first();
+            $brand = Brand::where('slug', $request->brand)->first();
 
             $products = $products->where('brand_id', $brand->id);
 
             $searchBrandArr[] = $brand->id;
-
         }
 
 
 
-        if($request->search) {
+        if ($request->search) {
 
-            $products = $products->where('name','LIKE','%'.$request->search.'%');
-
+            $products = $products->where('name', 'LIKE', '%' . $request->search . '%');
         }
 
 
 
-        $products = $products->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id');
+        $products = $products->select('id', 'name', 'short_name', 'slug', 'thumb_image', 'qty', 'sold_qty', 'price', 'offer_price', 'is_undefine', 'is_featured', 'new_product', 'is_top', 'is_best', 'category_id', 'sub_category_id', 'child_category_id', 'brand_id');
 
         $products = $products->paginate($paginateQty);
 
@@ -1287,9 +1262,9 @@ class HomeController extends Controller
 
 
 
-        $shopPageCenterBanner = BannerImage::select('product_slug','image','banner_location','status','after_product_qty','title_one')->find(25);
+        $shopPageCenterBanner = BannerImage::select('product_slug', 'image', 'banner_location', 'status', 'after_product_qty', 'title_one')->find(25);
 
-        $shopPageSidebarBanner = BannerImage::select('product_slug','image','banner_location','status','title_one','title_two')->find(26);
+        $shopPageSidebarBanner = BannerImage::select('product_slug', 'image', 'banner_location', 'status', 'title_one', 'title_two')->find(26);
 
 
 
@@ -1318,257 +1293,222 @@ class HomeController extends Controller
 
 
         return response()->json(['banner' => $banner, 'products' => $products, 'productCategories' => $productCategories, 'brands' => $brands, 'shop_page' => $shop_page, 'variantsForSearch' => $variantsForSearch, 'seoSetting' => $seoSetting, 'currencySetting' => $currencySetting, 'setting' => $setting]);
-
     }
 
 
 
-    public function searchProduct(Request $request){
+    public function searchProduct(Request $request)
+    {
 
         $paginateQty = CustomPagination::whereId('2')->first()->qty;
 
-        if($request->variantItems){
+        if ($request->variantItems) {
 
-            $products = Product::with('activeVariants.activeVariantItems')->whereHas('variantItems', function($query) use ($request){
+            $products = Product::with('activeVariants.activeVariantItems')->whereHas('variantItems', function ($query) use ($request) {
 
                 $sortArr = [];
 
-                if($request->variantItems){
+                if ($request->variantItems) {
 
-                    foreach($request->variantItems as $variantItem){
+                    foreach ($request->variantItems as $variantItem) {
 
                         $sortArr[] = $variantItem;
-
                     }
 
                     $query->whereIn('name', $sortArr);
-
                 }
+            })->where('status', 1)->where('approve_by_admin', 1);
+        } else {
 
-            })->where('status',1)->where('approve_by_admin',1);
-
-        }else{
-
-            $products = Product::with('activeVariants.activeVariantItems')->where('status',1)->where('approve_by_admin', 1);
-
+            $products = Product::with('activeVariants.activeVariantItems')->where('status', 1)->where('approve_by_admin', 1);
         }
 
 
 
-        if($request->shorting_id){
+        if ($request->shorting_id) {
 
-            if($request->shorting_id == 1){
+            if ($request->shorting_id == 1) {
 
-                $products = $products->orderBy('id','desc');
+                $products = $products->orderBy('id', 'desc');
+            } else if ($request->shorting_id == 2) {
 
-            }else if($request->shorting_id == 2){
+                $products = $products->orderBy('price', 'asc');
+            } else if ($request->shorting_id == 3) {
 
-                $products = $products->orderBy('price','asc');
-
-            }else if($request->shorting_id == 3){
-
-                $products = $products->orderBy('price','desc');
-
+                $products = $products->orderBy('price', 'desc');
             }
+        } else {
 
-        }else{
-
-            $products = $products->orderBy('id','desc');
-
+            $products = $products->orderBy('id', 'desc');
         }
 
 
 
 
 
-        if($request->category) {
+        if ($request->category) {
 
-            $category = Category::where('slug',$request->category)->first();
+            $category = Category::where('slug', $request->category)->first();
 
             $products = $products->where('category_id', $category->id);
-
         }
 
 
 
-        if($request->sub_category) {
+        if ($request->sub_category) {
 
-            $sub_category = SubCategory::where('slug',$request->sub_category)->first();
+            $sub_category = SubCategory::where('slug', $request->sub_category)->first();
 
             $products = $products->where('sub_category_id', $sub_category->id);
-
         }
 
 
 
-        if($request->child_category) {
+        if ($request->child_category) {
 
-            $child_category = ChildCategory::where('slug',$request->child_category)->first();
+            $child_category = ChildCategory::where('slug', $request->child_category)->first();
 
             $products = $products->where('child_category_id', $child_category->id);
-
         }
 
 
 
-        if($request->brand) {
+        if ($request->brand) {
 
-            $brand = Brand::where('slug',$request->brand)->first();
+            $brand = Brand::where('slug', $request->brand)->first();
 
             $products = $products->where('brand_id', $brand->id);
-
         }
 
 
 
         $brandSortArr = [];
 
-        if($request->brands){
+        if ($request->brands) {
 
-            foreach($request->brands as $brand){
+            foreach ($request->brands as $brand) {
 
                 $brandSortArr[] = $brand;
-
             }
 
             $products = $products->whereIn('brand_id', $brandSortArr);
-
         }
 
 
 
         $categorySortArr = [];
 
-        if($request->categories){
+        if ($request->categories) {
 
-            foreach($request->categories as $brand){
+            foreach ($request->categories as $brand) {
 
                 $categorySortArr[] = $brand;
-
             }
 
             $products = $products->whereIn('category_id', $categorySortArr);
-
         }
 
 
 
         $popularCategoryArr = [];
 
-        if($request->highlight){
+        if ($request->highlight) {
 
 
 
-            if($request->highlight == 'popular_category'){
+            if ($request->highlight == 'popular_category') {
 
                 $pop_categories = PopularCategory::all();
 
-                foreach($pop_categories as $pop_category){
+                foreach ($pop_categories as $pop_category) {
 
                     $popularCategoryArr[] = $pop_category->category_id;
-
                 }
 
                 $products = $products->whereIn('category_id', $popularCategoryArr);
-
             }
 
 
 
-            if($request->highlight == 'top_product'){
+            if ($request->highlight == 'top_product') {
 
-                $products = $products->where('is_top',1);
-
+                $products = $products->where('is_top', 1);
             }
 
 
 
-            if($request->highlight == 'new_arrival'){
+            if ($request->highlight == 'new_arrival') {
 
-                $products = $products->where('new_product',1);
-
+                $products = $products->where('new_product', 1);
             }
 
 
 
-            if($request->highlight == 'featured_product'){
+            if ($request->highlight == 'featured_product') {
 
-                $products = $products->where('is_featured',1);
-
+                $products = $products->where('is_featured', 1);
             }
 
 
 
-            if($request->highlight == 'best_product'){
+            if ($request->highlight == 'best_product') {
 
-                $products = $products->where('is_best',1);
-
+                $products = $products->where('is_best', 1);
             }
-
-
-
         }
 
 
 
 
 
-        if($request->min_price){
+        if ($request->min_price) {
 
-            if($request->min_price > 0){
+            if ($request->min_price > 0) {
 
                 $products = $products->where('price', '>=', $request->min_price);
-
             }
-
         }
 
 
 
-        if($request->max_price){
+        if ($request->max_price) {
 
-            if($request->max_price > 0){
+            if ($request->max_price > 0) {
 
                 $products = $products->where('price', '<=', $request->max_price);
-
             }
-
         }
 
 
 
-        if($request->shop_name){
+        if ($request->shop_name) {
 
             $slug = $request->shop_name;
 
             $seller = Vendor::where(['slug' => $slug])->first();
 
             $products = $products->where('vendor_id', $seller->id);
-
         }
 
 
 
-        if($request->search){
+        if ($request->search) {
 
-            $products = $products->where('name', 'LIKE', '%'. $request->search. "%")
+            $products = $products->where('name', 'LIKE', '%' . $request->search . "%")
 
-                                ->orWhere('long_description','LIKE','%'.$request->search.'%');
-
+                ->orWhere('long_description', 'LIKE', '%' . $request->search . '%');
         }
 
 
 
-        $products = $products->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best','category_id','sub_category_id','child_category_id','brand_id');
+        $products = $products->select('id', 'name', 'short_name', 'slug', 'thumb_image', 'qty', 'sold_qty', 'price', 'offer_price', 'is_undefine', 'is_featured', 'new_product', 'is_top', 'is_best', 'category_id', 'sub_category_id', 'child_category_id', 'brand_id');
 
-        if($request->per_page){
+        if ($request->per_page) {
 
             $products = $products->paginate($request->per_page);
-
-        }else{
+        } else {
 
             $products = $products->paginate($paginateQty);
-
         }
 
 
@@ -1578,42 +1518,39 @@ class HomeController extends Controller
 
 
         return response()->json(['products' => $products]);
-
-
-
     }
 
 
 
-    public function productDetail($slug){
+    public function productDetail($slug)
+    {
 
-        $product = Product::with('category','brand','activeVariants.activeVariantItems','avgReview')->where(['status' => 1, 'slug' => $slug])->first();
+        $product = Product::with('category', 'brand', 'activeVariants.activeVariantItems', 'avgReview')->where(['status' => 1, 'slug' => $slug])->first();
 
 
 
-        if(!$product){
+        if (!$product) {
 
             $notification = trans('user_validation.Something went wrong');
 
-            return response()->json(['message' => $notification],403);
-
+            return response()->json(['message' => $notification], 403);
         }
 
 
 
         $paginateQty = CustomPagination::whereId('5')->first()->qty;
 
-        $productReviews = ProductReview::with('user')->where(['status' => 1, 'product_id' =>$product->id])->get()->take(10);
+        $productReviews = ProductReview::with('user')->where(['status' => 1, 'product_id' => $product->id])->get()->take(10);
 
 
 
-        $totalProductReviewQty = ProductReview::where(['status' => 1, 'product_id' =>$product->id])->count();
+        $totalProductReviewQty = ProductReview::where(['status' => 1, 'product_id' => $product->id])->count();
 
-        $totalReview = ProductReview::where(['status' => 1, 'product_id' =>$product->id])->sum('rating');
+        $totalReview = ProductReview::where(['status' => 1, 'product_id' => $product->id])->sum('rating');
 
         $recaptchaSetting = GoogleRecaptcha::first();
 
-        $relatedProducts = Product::with('activeVariants.activeVariantItems')->where(['category_id' => $product->category_id, 'status' => 1,'approve_by_admin' => 1])->where('id' , '!=', $product->id)->get()->take(10);
+        $relatedProducts = Product::with('activeVariants.activeVariantItems')->where(['category_id' => $product->category_id, 'status' => 1, 'approve_by_admin' => 1])->where('id', '!=', $product->id)->get()->take(10);
 
         $defaultProfile = BannerImage::whereId('15')->select('image')->first();
 
@@ -1625,10 +1562,9 @@ class HomeController extends Controller
 
         $this_seller_products = [];
 
-        if($is_seller_product){
+        if ($is_seller_product) {
 
-            $this_seller_products = Product::with('activeVariants.activeVariantItems')->where(['vendor_id' => $product->vendor_id, 'status' => 1, 'approve_by_admin' => 1])->where('id' , '!=', $product->id)->get()->take(10);
-
+            $this_seller_products = Product::with('activeVariants.activeVariantItems')->where(['vendor_id' => $product->vendor_id, 'status' => 1, 'approve_by_admin' => 1])->where('id', '!=', $product->id)->get()->take(10);
         }
 
 
@@ -1639,26 +1575,23 @@ class HomeController extends Controller
 
         $sellerTotalProducts = 0;
 
-        if($is_seller_product){
+        if ($is_seller_product) {
 
             $sellerTotalProducts = Product::with('activeVariants.activeVariantItems')->where(['status' => 1, 'vendor_id' => $product->vendor_id, 'approve_by_admin' => 1])->count();
-
         }
 
         $sellerReviewQty = 0;
 
-        if($is_seller_product){
+        if ($is_seller_product) {
 
             $sellerReviewQty = ProductReview::where(['status' => 1, 'product_vendor_id' => $product->vendor_id])->count();
-
         }
 
         $sellerTotalReview = 0;
 
-        if($is_seller_product){
+        if ($is_seller_product) {
 
             $sellerTotalReview = ProductReview::where(['status' => 1, 'product_vendor_id' => $product->vendor_id])->sum('rating');
-
         }
 
 
@@ -1669,14 +1602,12 @@ class HomeController extends Controller
 
         $tags = '';
 
-        if($product->tags){
+        if ($product->tags) {
 
-            foreach($tagArray as $index => $tag){
+            foreach ($tagArray as $index => $tag) {
 
-                $tags .= $tag->value.',';
-
+                $tags .= $tag->value . ',';
             }
-
         }
 
 
@@ -1718,58 +1649,55 @@ class HomeController extends Controller
             'sellerTotalReview' => $sellerTotalReview
 
         ]);
-
     }
 
 
 
 
 
-    public function productReviewList($id){
+    public function productReviewList($id)
+    {
 
         $reviews = ProductReview::with('user')->where(['product_id' => $id, 'status' => 1])->paginate(10);
 
 
 
         return response()->json(['reviews' => $reviews]);
-
     }
 
 
 
-    public function addToCompare($id){
+    public function addToCompare($id)
+    {
 
         $compare_array = [];
 
-        foreach(Cart::instance('compare')->content() as $content){
+        foreach (Cart::instance('compare')->content() as $content) {
 
             $compare_array[] = $content->id;
-
         }
 
 
 
-        if(3 <= Cart::instance('compare')->count()){
+        if (3 <= Cart::instance('compare')->count()) {
 
             $notification = trans('user_validation.Already 3 items added');
 
             return response()->json(['status' => 0, 'message' => $notification]);
-
         }
 
 
 
-        if(in_array($id,$compare_array)){
+        if (in_array($id, $compare_array)) {
 
             $notification = trans('user_validation.Already added this item');
 
             return response()->json(['status' => 0, 'message' => $notification]);
-
-        }else{
+        } else {
 
             $product = Product::with('tax')->find($id);
 
-            $data=array();
+            $data = array();
 
             $data['id'] = $id;
 
@@ -1788,16 +1716,13 @@ class HomeController extends Controller
             $notification = trans('user_validation.Item added successfully');
 
             return response()->json(['status' => 1, 'message' => $notification]);
-
         }
-
-
-
     }
 
 
 
-    public function compare(){
+    public function compare()
+    {
 
         $banner = BreadcrumbImage::where(['id' => 6])->first();
 
@@ -1805,47 +1730,46 @@ class HomeController extends Controller
 
         $currencySetting = Setting::first();
 
-        return view('compare', compact('banner','compare_contents','currencySetting'));
-
+        return view('compare', compact('banner', 'compare_contents', 'currencySetting'));
     }
 
 
 
-    public function removeCompare($id){
+    public function removeCompare($id)
+    {
 
         Cart::instance('compare')->remove($id);
 
         $notification = trans('user_validation.Item remmoved successfully');
 
-        $notification = array('messege'=>$notification,'alert-type'=>'success');
+        $notification = array('messege' => $notification, 'alert-type' => 'success');
 
         return redirect()->back()->with($notification);
-
     }
 
 
 
 
 
-    public function flashSale(){
+    public function flashSale()
+    {
 
         $flashSale = FlashSale::first();
 
-        $flashSaleProducts = FlashSaleProduct::where('status',1)->get();
+        $flashSaleProducts = FlashSaleProduct::where('status', 1)->get();
 
         $product_arr = [];
 
-        foreach($flashSaleProducts as $flashSaleProduct){
+        foreach ($flashSaleProducts as $flashSaleProduct) {
 
             $product_arr[] = $flashSaleProduct->product_id;
-
         }
 
 
 
         $paginateQty = CustomPagination::whereId('2')->first()->qty;
 
-        $products = Product::with('activeVariants.activeVariantItems')->whereIn('id', $product_arr)->orderBy('id','desc')->where(['status' => 1, 'approve_by_admin' => 1])->select('id','name', 'short_name', 'slug', 'thumb_image','qty','sold_qty', 'price', 'offer_price','is_undefine','is_featured','new_product', 'is_top', 'is_best')->paginate($paginateQty);
+        $products = Product::with('activeVariants.activeVariantItems')->whereIn('id', $product_arr)->orderBy('id', 'desc')->where(['status' => 1, 'approve_by_admin' => 1])->select('id', 'name', 'short_name', 'slug', 'thumb_image', 'qty', 'sold_qty', 'price', 'offer_price', 'is_undefine', 'is_featured', 'new_product', 'is_top', 'is_best')->paginate($paginateQty);
 
 
 
@@ -1862,18 +1786,18 @@ class HomeController extends Controller
             'seoSetting' => $seoSetting
 
         ]);
-
     }
 
 
 
-    public function subscribeRequest(Request $request){
+    public function subscribeRequest(Request $request)
+    {
 
-        if($request->email != null){
+        if ($request->email != null) {
 
             $isExist = Subscriber::where('email', $request->email)->count();
 
-            if($isExist == 0){
+            if ($isExist == 0) {
 
                 $subscriber = new Subscriber();
 
@@ -1889,43 +1813,37 @@ class HomeController extends Controller
 
 
 
-                $template=EmailTemplate::where('id',3)->first();
+                $template = EmailTemplate::where('id', 3)->first();
 
-                $message=$template->description;
+                $message = $template->description;
 
-                $subject=$template->subject;
+                $subject = $template->subject;
 
-                Mail::to($subscriber->email)->send(new SubscriptionVerification($subscriber,$message,$subject));
+                Mail::to($subscriber->email)->send(new SubscriptionVerification($subscriber, $message, $subject));
 
 
 
                 return response()->json(['message' => trans('user_validation.Subscription successfully, please verified your email')]);
+            } else {
 
-
-
-            }else{
-
-                return response()->json(['message' => trans('user_validation.Email already exist'),403],403);
-
+                return response()->json(['message' => trans('user_validation.Email already exist'), 403], 403);
             }
+        } else {
 
-        }else{
-
-            return response()->json(['message' => trans('user_validation.Email Field is required')],403);
-
+            return response()->json(['message' => trans('user_validation.Email Field is required')], 403);
         }
-
     }
 
 
 
-    public function subscriberVerifcation(Request $request, $token){
+    public function subscriberVerifcation(Request $request, $token)
+    {
 
 
 
         $subscriber = Subscriber::where(['verified_token' => $token, 'email' => $request->email])->first();
 
-        if($subscriber){
+        if ($subscriber) {
 
             $subscriber->verified_token = null;
 
@@ -1942,62 +1860,13 @@ class HomeController extends Controller
 
 
             return redirect($frontend_url);
-
-        }else{
+        } else {
 
             $setting = Setting::first();
 
             $frontend_url = $setting->frontend_url;
 
             return redirect($frontend_url);
-
         }
-
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
-
