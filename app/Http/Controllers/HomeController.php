@@ -139,12 +139,6 @@ class HomeController extends Controller
     public function websiteSetup()
     {
         $userLang = request()->header('locale');
-        /*  if (Auth::guard('api')->check()) {
-            $userLang = Auth::guard('api')->user()->default_language;
-            $defaultLang = $userLang;
-        } else {
-            $defaultLang = Setting::first()->value('default_language');
-        } */
         $defaultLang = $userLang ?? 'en';
         if (file_exists(resource_path("lang/$defaultLang/user.php"))) {
             $language = include(resource_path("lang/$defaultLang/user.php"));
