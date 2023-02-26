@@ -1,7 +1,7 @@
 -- --------------------------------------------------------
 -- Hôte :                        localhost
--- Version du serveur:           5.7.24 - MySQL Community Server (GPL)
--- SE du serveur:                Win32
+-- Version du serveur:           8.0.30 - MySQL Community Server - GPL
+-- SE du serveur:                Win64
 -- HeidiSQL Version:             10.2.0.5599
 -- --------------------------------------------------------
 
@@ -13,15 +13,15 @@
 
 
 -- Listage de la structure de la base pour bmflash
-CREATE DATABASE IF NOT EXISTS `bmflash` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE IF NOT EXISTS `bmflash` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `bmflash`;
 
 -- Listage de la structure de la table bmflash. about_us
 CREATE TABLE IF NOT EXISTS `about_us` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `banner_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) DEFAULT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `banner_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -35,18 +35,18 @@ INSERT INTO `about_us` (`id`, `description`, `banner_image`, `status`, `created_
 
 -- Listage de la structure de la table bmflash. addresses
 CREATE TABLE IF NOT EXISTS `addresses` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `country_id` int(11) NOT NULL DEFAULT '0',
-  `state_id` int(11) NOT NULL DEFAULT '0',
-  `city_id` int(11) NOT NULL DEFAULT '0',
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `default_shipping` int(11) NOT NULL DEFAULT '0',
-  `default_billing` int(11) NOT NULL DEFAULT '0',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country_id` int NOT NULL DEFAULT '0',
+  `state_id` int NOT NULL DEFAULT '0',
+  `city_id` int NOT NULL DEFAULT '0',
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `default_shipping` int NOT NULL DEFAULT '0',
+  `default_billing` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -67,16 +67,16 @@ INSERT INTO `addresses` (`id`, `user_id`, `name`, `email`, `phone`, `country_id`
 
 -- Listage de la structure de la table bmflash. admins
 CREATE TABLE IF NOT EXISTS `admins` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `admin_type` int(10) NOT NULL DEFAULT '0',
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `admin_type` int NOT NULL DEFAULT '0',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` int(10) NOT NULL DEFAULT '1',
-  `forget_password_token` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int NOT NULL DEFAULT '1',
+  `forget_password_token` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -91,12 +91,12 @@ INSERT INTO `admins` (`id`, `admin_type`, `name`, `email`, `image`, `email_verif
 
 -- Listage de la structure de la table bmflash. announcement_modals
 CREATE TABLE IF NOT EXISTS `announcement_modals` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `expired_date` int(11) NOT NULL DEFAULT '1',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `status` int NOT NULL DEFAULT '0',
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `expired_date` int NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -110,10 +110,10 @@ INSERT INTO `announcement_modals` (`id`, `status`, `title`, `description`, `imag
 
 -- Listage de la structure de la table bmflash. bank_payments
 CREATE TABLE IF NOT EXISTS `bank_payments` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `account_info` text COLLATE utf8mb4_unicode_ci,
-  `cash_on_delivery_status` int(11) NOT NULL DEFAULT '1',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `status` int NOT NULL DEFAULT '0',
+  `account_info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `cash_on_delivery_status` int NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -127,20 +127,20 @@ INSERT INTO `bank_payments` (`id`, `status`, `account_info`, `cash_on_delivery_s
 
 -- Listage de la structure de la table bmflash. banner_images
 CREATE TABLE IF NOT EXISTS `banner_images` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `header` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `link` text COLLATE utf8mb4_unicode_ci,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `banner_location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `after_product_qty` int(11) NOT NULL DEFAULT '0',
-  `status` int(11) NOT NULL DEFAULT '0',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `header` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `link` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `banner_location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `after_product_qty` int NOT NULL DEFAULT '0',
+  `status` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `title_one` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `title_two` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `badge` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `product_slug` text COLLATE utf8mb4_unicode_ci,
+  `title_one` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title_two` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `badge` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_slug` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -166,18 +166,18 @@ INSERT INTO `banner_images` (`id`, `header`, `title`, `link`, `image`, `banner_l
 
 -- Listage de la structure de la table bmflash. blogs
 CREATE TABLE IF NOT EXISTS `blogs` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `admin_id` int(11) NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `blog_category_id` int(11) NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `views` int(11) NOT NULL DEFAULT '0',
-  `seo_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `seo_description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `show_homepage` int(11) NOT NULL DEFAULT '0',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `admin_id` int NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `blog_category_id` int NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `views` int NOT NULL DEFAULT '0',
+  `seo_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `seo_description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int NOT NULL DEFAULT '0',
+  `show_homepage` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -186,20 +186,20 @@ CREATE TABLE IF NOT EXISTS `blogs` (
 -- Listage des données de la table bmflash.blogs : ~6 rows (environ)
 /*!40000 ALTER TABLE `blogs` DISABLE KEYS */;
 INSERT INTO `blogs` (`id`, `admin_id`, `title`, `slug`, `blog_category_id`, `image`, `description`, `views`, `seo_title`, `seo_description`, `status`, `show_homepage`, `created_at`, `updated_at`) VALUES
-	(2, 1, 'Business-to-consumer that involves selling fight products and services', 'businesstoconsumer-that-involves-selling-fight-products-and-services', 2, 'uploads/custom-images/blog--2022-09-22-04-09-44-5529.jpg', '<p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 25, 'Business-to-consumer that involves selling fight products and services', 'Business-to-consumer that involves selling fight products and services', 1, 1, '2022-09-22 11:09:44', '2022-11-21 01:10:00'),
-	(3, 1, 'Top 10 Best Professional Blogging Platforms for 2022', 'top-10-best-professional-blogging-platforms-for-2022', 3, 'uploads/custom-images/blog--2022-09-22-04-12-00-7502.jpg', '<p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 21, 'Top 10 Best Professional Blogging Platforms for 2022', 'Top 10 Best Professional Blogging Platforms for 2022', 1, 1, '2022-09-22 11:12:00', '2023-01-22 22:47:35'),
+	(2, 1, 'Business-to-consumer that involves selling fight products and services', 'businesstoconsumer-that-involves-selling-fight-products-and-services', 2, 'uploads/custom-images/blog--2022-09-22-04-09-44-5529.jpg', '<p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 26, 'Business-to-consumer that involves selling fight products and services', 'Business-to-consumer that involves selling fight products and services', 1, 1, '2022-09-22 11:09:44', '2023-02-24 21:59:37'),
+	(3, 1, 'Top 10 Best Professional Blogging Platforms for 2022', 'top-10-best-professional-blogging-platforms-for-2022', 3, 'uploads/custom-images/blog--2022-09-22-04-12-00-7502.jpg', '<p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 22, 'Top 10 Best Professional Blogging Platforms for 2022', 'Top 10 Best Professional Blogging Platforms for 2022', 1, 1, '2022-09-22 11:12:00', '2023-02-24 21:52:17'),
 	(4, 1, '6 Best WordPress E-commerce Plugins for Online Stores in 2022', '6-best-wordpress-ecommerce-plugins-for-online-stores-in-2022', 5, 'uploads/custom-images/blog--2022-09-22-04-13-57-7380.jpg', '<p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 11, '6 Best WordPress E-commerce Plugins for Online Stores in 2022', '6 Best WordPress E-commerce Plugins for Online Stores in 2022', 1, 1, '2022-09-22 11:13:57', '2022-11-21 01:09:42'),
 	(5, 1, '15 Best WordPress Newspaper Themes to Look Out for in 2022', '15-best-wordpress-newspaper-themes-to-look-out-for-in-2022', 5, 'uploads/custom-images/blog--2022-09-22-04-14-55-6716.jpg', '<p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 40, '15 Best WordPress Newspaper Themes to Look Out for in 2022', '15 Best WordPress Newspaper Themes to Look Out for in 2022', 1, 1, '2022-09-22 11:14:55', '2022-11-02 22:59:00'),
 	(6, 1, 'Must-Have WordPress Plugins for Ecommerce Websites in 2022', 'musthave-wordpress-plugins-for-ecommerce-websites-in-2022', 4, 'uploads/custom-images/blog--2022-09-22-04-15-55-3458.jpg', '<p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 13, 'Must-Have WordPress Plugins for Ecommerce Websites in 2022', 'Must-Have WordPress Plugins for Ecommerce Websites in 2022', 1, 0, '2022-09-22 11:15:55', '2022-11-02 22:58:59'),
-	(7, 1, 'It’s official! The iPhone 14 Series is on its way! Rumors turned out to be true. The Goods & the Bads.', 'its-official-the-iphone-14-series-is-on-its-way-rumors-turned-out-to-be-true-the-goods-the-bads', 2, 'uploads/custom-images/blog--2022-09-22-04-18-09-8292.jpg', '<p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 20, 'It’s official! The iPhone 14 Series is on its way! Rumors turned out to be true. The Goods & the Bads.', 'It’s official! The iPhone 14 Series is on its way! Rumors turned out to be true. The Goods & the Bads.', 1, 1, '2022-09-22 11:18:09', '2022-11-23 06:18:23');
+	(7, 1, 'It’s official! The iPhone 14 Series is on its way! Rumors turned out to be true. The Goods & the Bads.', 'its-official-the-iphone-14-series-is-on-its-way-rumors-turned-out-to-be-true-the-goods-the-bads', 2, 'uploads/custom-images/blog--2022-09-22-04-18-09-8292.jpg', '<p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using \'Content here, content here\', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for \'lorem ipsum\' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.</p><p style="margin-right: 0px; margin-bottom: 15px; margin-left: 0px; padding: 0px; text-align: justify; color: rgb(0, 0, 0); font-family: &quot;Open Sans&quot;, Arial, sans-serif;">The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>', 21, 'It’s official! The iPhone 14 Series is on its way! Rumors turned out to be true. The Goods & the Bads.', 'It’s official! The iPhone 14 Series is on its way! Rumors turned out to be true. The Goods & the Bads.', 1, 1, '2022-09-22 11:18:09', '2023-02-25 14:10:02');
 /*!40000 ALTER TABLE `blogs` ENABLE KEYS */;
 
 -- Listage de la structure de la table bmflash. blog_categories
 CREATE TABLE IF NOT EXISTS `blog_categories` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -219,12 +219,12 @@ INSERT INTO `blog_categories` (`id`, `name`, `slug`, `status`, `created_at`, `up
 
 -- Listage de la structure de la table bmflash. blog_comments
 CREATE TABLE IF NOT EXISTS `blog_comments` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `blog_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `comment` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(10) NOT NULL DEFAULT '0',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `blog_id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -243,11 +243,11 @@ INSERT INTO `blog_comments` (`id`, `blog_id`, `name`, `email`, `comment`, `statu
 
 -- Listage de la structure de la table bmflash. brands
 CREATE TABLE IF NOT EXISTS `brands` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `logo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -272,10 +272,10 @@ INSERT INTO `brands` (`id`, `name`, `slug`, `logo`, `status`, `created_at`, `upd
 
 -- Listage de la structure de la table bmflash. breadcrumb_images
 CREATE TABLE IF NOT EXISTS `breadcrumb_images` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image_type` int(11) NOT NULL DEFAULT '1',
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image_type` int NOT NULL DEFAULT '1',
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -299,12 +299,12 @@ INSERT INTO `breadcrumb_images` (`id`, `location`, `image_type`, `image`, `creat
 
 -- Listage de la structure de la table bmflash. categories
 CREATE TABLE IF NOT EXISTS `categories` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `icon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int NOT NULL DEFAULT '0',
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -328,12 +328,12 @@ INSERT INTO `categories` (`id`, `name`, `slug`, `icon`, `status`, `image`, `crea
 
 -- Listage de la structure de la table bmflash. child_categories
 CREATE TABLE IF NOT EXISTS `child_categories` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `category_id` int(10) NOT NULL,
-  `sub_category_id` int(10) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `category_id` int NOT NULL,
+  `sub_category_id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -352,11 +352,11 @@ INSERT INTO `child_categories` (`id`, `category_id`, `sub_category_id`, `name`, 
 
 -- Listage de la structure de la table bmflash. cities
 CREATE TABLE IF NOT EXISTS `cities` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `country_state_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `country_state_id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -379,9 +379,9 @@ INSERT INTO `cities` (`id`, `country_state_id`, `name`, `slug`, `status`, `creat
 
 -- Listage de la structure de la table bmflash. compare_products
 CREATE TABLE IF NOT EXISTS `compare_products` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `product_id` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -396,12 +396,12 @@ INSERT INTO `compare_products` (`id`, `user_id`, `product_id`, `created_at`, `up
 
 -- Listage de la structure de la table bmflash. contact_messages
 CREATE TABLE IF NOT EXISTS `contact_messages` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `subject` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `subject` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -417,13 +417,13 @@ INSERT INTO `contact_messages` (`id`, `name`, `email`, `phone`, `subject`, `mess
 
 -- Listage de la structure de la table bmflash. contact_pages
 CREATE TABLE IF NOT EXISTS `contact_pages` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `email` text COLLATE utf8mb4_unicode_ci,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` text COLLATE utf8mb4_unicode_ci,
-  `map` text COLLATE utf8mb4_unicode_ci,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `email` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `map` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -432,24 +432,24 @@ CREATE TABLE IF NOT EXISTS `contact_pages` (
 -- Listage des données de la table bmflash.contact_pages : ~0 rows (environ)
 /*!40000 ALTER TABLE `contact_pages` DISABLE KEYS */;
 INSERT INTO `contact_pages` (`id`, `title`, `description`, `email`, `address`, `phone`, `map`, `created_at`, `updated_at`) VALUES
-	(1, 'Contact Information', 'Fill the form below or write us .We will help you as soon as possible.', 'abdur.rohman2003@gmail.com', 'Mirpur 11 ,Dhaka 1216 Bangladesh', '+88 01682 825 123', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.94539481518!2d-74.26675559025064!3d40.69739290398433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sbd!4v1656755618576!5m2!1sen!2sbd', '2022-09-22 12:08:24', '2022-09-22 12:08:24');
+	(1, 'Contact Information', 'Fill the form below or write us .We will help you as soon as possible.', 'contact@bm-tracking.com', 'Douala Bessengue rue des pavés, Cameroun', '+237 680 76 66 93', 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d193595.94539481518!2d-74.26675559025064!3d40.69739290398433!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2sbd!4v1656755618576!5m2!1sen!2sbd', '2022-09-22 12:08:24', '2023-02-03 21:06:23');
 /*!40000 ALTER TABLE `contact_pages` ENABLE KEYS */;
 
 -- Listage de la structure de la table bmflash. cookie_consents
 CREATE TABLE IF NOT EXISTS `cookie_consents` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `border` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `corners` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `background_color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `text_color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `border_color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `btn_bg_color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `btn_text_color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `message` text COLLATE utf8mb4_unicode_ci,
-  `link_text` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `btn_text` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `status` int NOT NULL DEFAULT '1',
+  `border` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `corners` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `background_color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `text_color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `border_color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `btn_bg_color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `btn_text_color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `link_text` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `btn_text` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -463,10 +463,10 @@ INSERT INTO `cookie_consents` (`id`, `status`, `border`, `corners`, `background_
 
 -- Listage de la structure de la table bmflash. countries
 CREATE TABLE IF NOT EXISTS `countries` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -484,11 +484,11 @@ INSERT INTO `countries` (`id`, `name`, `slug`, `status`, `created_at`, `updated_
 
 -- Listage de la structure de la table bmflash. country_states
 CREATE TABLE IF NOT EXISTS `country_states` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `country_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `country_id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -510,16 +510,16 @@ INSERT INTO `country_states` (`id`, `country_id`, `name`, `slug`, `status`, `cre
 
 -- Listage de la structure de la table bmflash. coupons
 CREATE TABLE IF NOT EXISTS `coupons` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `offer_type` int(11) NOT NULL DEFAULT '0',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `offer_type` int NOT NULL DEFAULT '0',
   `discount` double NOT NULL DEFAULT '0',
-  `max_quantity` int(11) NOT NULL DEFAULT '0',
-  `min_purchase_price` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `expired_date` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `apply_qty` int(11) NOT NULL DEFAULT '0',
-  `status` int(11) NOT NULL DEFAULT '0',
+  `max_quantity` int NOT NULL DEFAULT '0',
+  `min_purchase_price` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `expired_date` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `apply_qty` int NOT NULL DEFAULT '0',
+  `status` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -533,13 +533,13 @@ INSERT INTO `coupons` (`id`, `name`, `code`, `offer_type`, `discount`, `max_quan
 
 -- Listage de la structure de la table bmflash. currencies
 CREATE TABLE IF NOT EXISTS `currencies` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `code` varchar(3) NOT NULL,
   `name` varchar(50) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=165 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=165 DEFAULT CHARSET=utf8mb3;
 
 -- Listage des données de la table bmflash.currencies : ~164 rows (environ)
 /*!40000 ALTER TABLE `currencies` DISABLE KEYS */;
@@ -712,14 +712,14 @@ INSERT INTO `currencies` (`id`, `code`, `name`, `created_at`, `updated_at`) VALU
 
 -- Listage de la structure de la table bmflash. currency_countries
 CREATE TABLE IF NOT EXISTS `currency_countries` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_bin NOT NULL,
-  `code` varchar(2) COLLATE utf8_bin NOT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL,
+  `code` varchar(2) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=250 DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+) ENGINE=InnoDB AUTO_INCREMENT=250 DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
 -- Listage des données de la table bmflash.currency_countries : ~249 rows (environ)
 /*!40000 ALTER TABLE `currency_countries` DISABLE KEYS */;
@@ -977,11 +977,11 @@ INSERT INTO `currency_countries` (`id`, `name`, `code`, `created_at`, `updated_a
 
 -- Listage de la structure de la table bmflash. custom_pages
 CREATE TABLE IF NOT EXISTS `custom_pages` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `page_name` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `page_name` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -995,9 +995,9 @@ INSERT INTO `custom_pages` (`id`, `page_name`, `slug`, `description`, `status`, 
 
 -- Listage de la structure de la table bmflash. custom_paginations
 CREATE TABLE IF NOT EXISTS `custom_paginations` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `page_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `qty` int(11) NOT NULL DEFAULT '1',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `page_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `qty` int NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1016,14 +1016,14 @@ INSERT INTO `custom_paginations` (`id`, `page_name`, `qty`, `created_at`, `updat
 
 -- Listage de la structure de la table bmflash. email_configurations
 CREATE TABLE IF NOT EXISTS `email_configurations` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `mail_type` tinyint(4) DEFAULT NULL,
-  `mail_host` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mail_port` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `smtp_username` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `smtp_password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mail_encryption` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `mail_type` tinyint DEFAULT NULL,
+  `mail_host` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mail_port` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `smtp_username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `smtp_password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mail_encryption` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1037,10 +1037,10 @@ INSERT INTO `email_configurations` (`id`, `mail_type`, `mail_host`, `mail_port`,
 
 -- Listage de la structure de la table bmflash. email_templates
 CREATE TABLE IF NOT EXISTS `email_templates` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` text COLLATE utf8mb4_unicode_ci,
-  `subject` text COLLATE utf8mb4_unicode_ci,
-  `description` text COLLATE utf8mb4_unicode_ci,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `subject` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1060,11 +1060,11 @@ INSERT INTO `email_templates` (`id`, `name`, `subject`, `description`, `created_
 
 -- Listage de la structure de la table bmflash. error_pages
 CREATE TABLE IF NOT EXISTS `error_pages` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `page_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `header` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `button_text` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `page_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `header` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `button_text` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1080,9 +1080,9 @@ INSERT INTO `error_pages` (`id`, `page_name`, `image`, `header`, `button_text`, 
 
 -- Listage de la structure de la table bmflash. facebook_comments
 CREATE TABLE IF NOT EXISTS `facebook_comments` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `app_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `comment_type` int(11) NOT NULL DEFAULT '1',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `app_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comment_type` int NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1096,9 +1096,9 @@ INSERT INTO `facebook_comments` (`id`, `app_id`, `comment_type`, `created_at`, `
 
 -- Listage de la structure de la table bmflash. facebook_pixels
 CREATE TABLE IF NOT EXISTS `facebook_pixels` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `app_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `status` int NOT NULL DEFAULT '0',
+  `app_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1112,12 +1112,12 @@ INSERT INTO `facebook_pixels` (`id`, `status`, `app_id`, `created_at`, `updated_
 
 -- Listage de la structure de la table bmflash. failed_jobs
 CREATE TABLE IF NOT EXISTS `failed_jobs` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`)
@@ -1129,10 +1129,10 @@ CREATE TABLE IF NOT EXISTS `failed_jobs` (
 
 -- Listage de la structure de la table bmflash. faqs
 CREATE TABLE IF NOT EXISTS `faqs` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `question` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `answer` text COLLATE utf8mb4_unicode_ci,
-  `status` int(11) NOT NULL DEFAULT '1',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `question` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `answer` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `status` int NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1149,8 +1149,8 @@ INSERT INTO `faqs` (`id`, `question`, `answer`, `status`, `created_at`, `updated
 
 -- Listage de la structure de la table bmflash. featured_categories
 CREATE TABLE IF NOT EXISTS `featured_categories` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `category_id` int(11) NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `category_id` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1165,13 +1165,13 @@ INSERT INTO `featured_categories` (`id`, `category_id`, `created_at`, `updated_a
 
 -- Listage de la structure de la table bmflash. flash_sales
 CREATE TABLE IF NOT EXISTS `flash_sales` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `homepage_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `flashsale_page_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `homepage_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `flashsale_page_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `end_time` datetime NOT NULL,
   `offer` double NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `status` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1180,14 +1180,14 @@ CREATE TABLE IF NOT EXISTS `flash_sales` (
 -- Listage des données de la table bmflash.flash_sales : ~0 rows (environ)
 /*!40000 ALTER TABLE `flash_sales` DISABLE KEYS */;
 INSERT INTO `flash_sales` (`id`, `title`, `homepage_image`, `flashsale_page_image`, `end_time`, `offer`, `status`, `created_at`, `updated_at`) VALUES
-	(1, 'WOO! Flash Sale', 'uploads/website-images/flash_sale--2022-09-25-04-09-21-6554.png', 'uploads/website-images/flash_sale--2022-09-20-10-54-12-8555.png', '2025-09-14 14:57:00', 10, 1, NULL, '2022-11-21 18:14:27');
+	(1, 'WOO! Flash Sale', 'uploads/website-images/flash_sale--2022-09-25-04-09-21-6554.png', 'uploads/website-images/flash_sale--2022-09-20-10-54-12-8555.png', '2023-03-04 20:31:00', 10, 1, NULL, '2023-02-03 20:31:29');
 /*!40000 ALTER TABLE `flash_sales` ENABLE KEYS */;
 
 -- Listage de la structure de la table bmflash. flash_sale_products
 CREATE TABLE IF NOT EXISTS `flash_sale_products` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `status` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1207,15 +1207,15 @@ INSERT INTO `flash_sale_products` (`id`, `product_id`, `status`, `created_at`, `
 
 -- Listage de la structure de la table bmflash. flutterwaves
 CREATE TABLE IF NOT EXISTS `flutterwaves` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `public_key` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `secret_key` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `public_key` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `secret_key` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `currency_rate` double NOT NULL DEFAULT '1',
-  `country_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `currency_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `logo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
+  `country_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `currency_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1229,16 +1229,16 @@ INSERT INTO `flutterwaves` (`id`, `public_key`, `secret_key`, `currency_rate`, `
 
 -- Listage de la structure de la table bmflash. footers
 CREATE TABLE IF NOT EXISTS `footers` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `about_us` text COLLATE utf8mb4_unicode_ci,
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `first_column` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `second_column` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `third_column` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `copyright` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `payment_image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `about_us` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `first_column` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `second_column` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `third_column` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `copyright` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_image` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1247,15 +1247,15 @@ CREATE TABLE IF NOT EXISTS `footers` (
 -- Listage des données de la table bmflash.footers : ~0 rows (environ)
 /*!40000 ALTER TABLE `footers` DISABLE KEYS */;
 INSERT INTO `footers` (`id`, `about_us`, `phone`, `email`, `address`, `first_column`, `second_column`, `third_column`, `copyright`, `payment_image`, `created_at`, `updated_at`) VALUES
-	(1, 'We know there are a lot of threa developers our but we pride into a firm in the industry.', '+88 01682 825 123', 'abdur.rohman2003@gmail.com', 'Mirpur 11 ,Dhaka 1216 Bangladesh', 'Feature', 'General Links', 'Helpful', '©2022 Quomodosoft All rights reserved', 'uploads/website-images/payment-card-2022-09-26-12-59-29-8933.png', NULL, '2022-11-16 03:25:20');
+	(1, 'We know there are a lot of threa developers our but we pride into a firm in the industry.', '+237 6 80 76 66 93', 'contact@bm-tracking.com', '2PW6+PHV, Douala', 'Feature', 'General Links', 'Helpful', 'Copyright 2023 BM-Tracking, All Right Reserved', 'uploads/website-images/payment-card-2022-09-26-12-59-29-8933.png', NULL, '2023-02-03 20:38:12');
 /*!40000 ALTER TABLE `footers` ENABLE KEYS */;
 
 -- Listage de la structure de la table bmflash. footer_links
 CREATE TABLE IF NOT EXISTS `footer_links` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `column` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `column` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1277,9 +1277,9 @@ INSERT INTO `footer_links` (`id`, `column`, `link`, `title`, `created_at`, `upda
 
 -- Listage de la structure de la table bmflash. footer_social_links
 CREATE TABLE IF NOT EXISTS `footer_social_links` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `icon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1295,9 +1295,9 @@ INSERT INTO `footer_social_links` (`id`, `link`, `icon`, `created_at`, `updated_
 
 -- Listage de la structure de la table bmflash. google_analytics
 CREATE TABLE IF NOT EXISTS `google_analytics` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `analytic_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` int(11) NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `analytic_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1311,10 +1311,10 @@ INSERT INTO `google_analytics` (`id`, `analytic_id`, `status`, `created_at`, `up
 
 -- Listage de la structure de la table bmflash. google_recaptchas
 CREATE TABLE IF NOT EXISTS `google_recaptchas` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `site_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `secret_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `site_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `secret_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1328,11 +1328,11 @@ INSERT INTO `google_recaptchas` (`id`, `site_key`, `secret_key`, `status`, `crea
 
 -- Listage de la structure de la table bmflash. home_page_one_visibilities
 CREATE TABLE IF NOT EXISTS `home_page_one_visibilities` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `default_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `section_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `qty` int(11) DEFAULT '1',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `default_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `section_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int NOT NULL DEFAULT '1',
+  `qty` int DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1354,12 +1354,12 @@ INSERT INTO `home_page_one_visibilities` (`id`, `default_name`, `section_name`, 
 
 -- Listage de la structure de la table bmflash. instamojo_payments
 CREATE TABLE IF NOT EXISTS `instamojo_payments` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `api_key` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `auth_token` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `currency_rate` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
-  `account_mode` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Sandbox',
-  `status` int(11) NOT NULL DEFAULT '1',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `api_key` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `auth_token` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `currency_rate` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1',
+  `account_mode` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Sandbox',
+  `status` int NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1373,10 +1373,10 @@ INSERT INTO `instamojo_payments` (`id`, `api_key`, `auth_token`, `currency_rate`
 
 -- Listage de la structure de la table bmflash. maintainance_texts
 CREATE TABLE IF NOT EXISTS `maintainance_texts` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `status` int(10) NOT NULL DEFAULT '0',
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `status` int NOT NULL DEFAULT '0',
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1390,10 +1390,10 @@ INSERT INTO `maintainance_texts` (`id`, `status`, `image`, `description`, `creat
 
 -- Listage de la structure de la table bmflash. mega_menu_categories
 CREATE TABLE IF NOT EXISTS `mega_menu_categories` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `category_id` int(11) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `serial` int(11) NOT NULL DEFAULT '0',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `category_id` int NOT NULL,
+  `status` int NOT NULL DEFAULT '0',
+  `serial` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1409,11 +1409,11 @@ INSERT INTO `mega_menu_categories` (`id`, `category_id`, `status`, `serial`, `cr
 
 -- Listage de la structure de la table bmflash. mega_menu_sub_categories
 CREATE TABLE IF NOT EXISTS `mega_menu_sub_categories` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `mega_menu_category_id` int(11) NOT NULL,
-  `sub_category_id` int(10) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `serial` int(11) NOT NULL DEFAULT '0',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `mega_menu_category_id` int NOT NULL,
+  `sub_category_id` int NOT NULL,
+  `status` int NOT NULL DEFAULT '0',
+  `serial` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1435,9 +1435,9 @@ INSERT INTO `mega_menu_sub_categories` (`id`, `mega_menu_category_id`, `sub_cate
 
 -- Listage de la structure de la table bmflash. menu_visibilities
 CREATE TABLE IF NOT EXISTS `menu_visibilities` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `menu_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `menu_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1475,14 +1475,14 @@ INSERT INTO `menu_visibilities` (`id`, `menu_name`, `status`, `created_at`, `upd
 
 -- Listage de la structure de la table bmflash. messages
 CREATE TABLE IF NOT EXISTS `messages` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `customer_id` int(11) NOT NULL,
-  `seller_id` int(11) NOT NULL,
-  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `customer_read_msg` int(11) NOT NULL DEFAULT '0',
-  `seller_read_msg` int(11) NOT NULL,
-  `send_customer` int(11) NOT NULL DEFAULT '0',
-  `send_seller` int(11) NOT NULL DEFAULT '0',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `customer_id` int NOT NULL,
+  `seller_id` int NOT NULL,
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `customer_read_msg` int NOT NULL DEFAULT '0',
+  `seller_read_msg` int NOT NULL,
+  `send_customer` int NOT NULL DEFAULT '0',
+  `send_seller` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1494,9 +1494,9 @@ CREATE TABLE IF NOT EXISTS `messages` (
 
 -- Listage de la structure de la table bmflash. migrations
 CREATE TABLE IF NOT EXISTS `migrations` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=115 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -1608,25 +1608,25 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 -- Listage de la structure de la table bmflash. orders
 CREATE TABLE IF NOT EXISTS `orders` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `order_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int NOT NULL,
   `total_amount` double NOT NULL DEFAULT '0',
-  `product_qty` int(11) NOT NULL,
-  `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `payment_status` int(11) NOT NULL DEFAULT '0',
-  `payment_approval_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `transection_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `shipping_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_qty` int NOT NULL,
+  `payment_method` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment_status` int NOT NULL DEFAULT '0',
+  `payment_approval_date` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `transection_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_method` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `shipping_cost` double NOT NULL DEFAULT '0',
   `coupon_coast` double NOT NULL DEFAULT '0',
-  `order_status` int(11) NOT NULL DEFAULT '0',
-  `order_approval_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `order_delivered_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `order_completed_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `order_declined_date` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `cash_on_delivery` int(10) NOT NULL DEFAULT '0',
-  `additional_info` text COLLATE utf8mb4_unicode_ci,
+  `order_status` int NOT NULL DEFAULT '0',
+  `order_approval_date` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_delivered_date` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_completed_date` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order_declined_date` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cash_on_delivery` int NOT NULL DEFAULT '0',
+  `additional_info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1687,24 +1687,24 @@ INSERT INTO `orders` (`id`, `order_id`, `user_id`, `total_amount`, `product_qty`
 
 -- Listage de la structure de la table bmflash. order_addresses
 CREATE TABLE IF NOT EXISTS `order_addresses` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) NOT NULL,
-  `billing_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `billing_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `billing_phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `billing_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `billing_country` varchar(11) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `billing_state` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `billing_city` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `billing_address_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `shipping_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `shipping_email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `shipping_phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `shipping_address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `shipping_country` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `shipping_state` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `shipping_city` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `shipping_address_type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int NOT NULL,
+  `billing_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `billing_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `billing_phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `billing_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `billing_country` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `billing_state` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `billing_city` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `billing_address_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_country` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_state` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_city` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shipping_address_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1765,13 +1765,13 @@ INSERT INTO `order_addresses` (`id`, `order_id`, `billing_name`, `billing_email`
 
 -- Listage de la structure de la table bmflash. order_products
 CREATE TABLE IF NOT EXISTS `order_products` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `seller_id` int(11) NOT NULL DEFAULT '0',
-  `product_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `order_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `seller_id` int NOT NULL DEFAULT '0',
+  `product_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `unit_price` double NOT NULL DEFAULT '0',
-  `qty` int(11) NOT NULL,
+  `qty` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1880,11 +1880,11 @@ INSERT INTO `order_products` (`id`, `order_id`, `product_id`, `seller_id`, `prod
 
 -- Listage de la structure de la table bmflash. order_product_variants
 CREATE TABLE IF NOT EXISTS `order_product_variants` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `order_product_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `variant_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `variant_value` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `order_product_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `variant_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `variant_value` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1896,8 +1896,8 @@ CREATE TABLE IF NOT EXISTS `order_product_variants` (
 
 -- Listage de la structure de la table bmflash. password_resets
 CREATE TABLE IF NOT EXISTS `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   KEY `password_resets_email_index` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1908,14 +1908,14 @@ CREATE TABLE IF NOT EXISTS `password_resets` (
 
 -- Listage de la structure de la table bmflash. paymongo_payments
 CREATE TABLE IF NOT EXISTS `paymongo_payments` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `secret_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `public_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `secret_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `public_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int NOT NULL DEFAULT '0',
   `currency_rate` double NOT NULL DEFAULT '1',
-  `country_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `currency_code` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `currency_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1929,13 +1929,13 @@ INSERT INTO `paymongo_payments` (`id`, `secret_key`, `public_key`, `status`, `cu
 
 -- Listage de la structure de la table bmflash. paypal_payments
 CREATE TABLE IF NOT EXISTS `paypal_payments` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `account_mode` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `client_id` text COLLATE utf8mb4_unicode_ci,
-  `secret_id` text COLLATE utf8mb4_unicode_ci,
-  `country_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `currency_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `status` int NOT NULL DEFAULT '0',
+  `account_mode` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `client_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `secret_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `country_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `currency_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `currency_rate` double NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1950,18 +1950,18 @@ INSERT INTO `paypal_payments` (`id`, `status`, `account_mode`, `client_id`, `sec
 
 -- Listage de la structure de la table bmflash. paystack_and_mollies
 CREATE TABLE IF NOT EXISTS `paystack_and_mollies` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `mollie_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `mollie_status` int(11) NOT NULL DEFAULT '0',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `mollie_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `mollie_status` int NOT NULL DEFAULT '0',
   `mollie_currency_rate` double NOT NULL DEFAULT '1',
-  `paystack_public_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `paystack_secret_key` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `paystack_public_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `paystack_secret_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `paystack_currency_rate` double NOT NULL DEFAULT '1',
-  `paystack_status` int(11) NOT NULL DEFAULT '0',
-  `mollie_country_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mollie_currency_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `paystack_country_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `paystack_currency_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `paystack_status` int NOT NULL DEFAULT '0',
+  `mollie_country_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mollie_currency_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `paystack_country_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `paystack_currency_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -1975,12 +1975,12 @@ INSERT INTO `paystack_and_mollies` (`id`, `mollie_key`, `mollie_status`, `mollie
 
 -- Listage de la structure de la table bmflash. personal_access_tokens
 CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tokenable_id` bigint(20) unsigned NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint unsigned NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1995,8 +1995,8 @@ CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
 
 -- Listage de la structure de la table bmflash. popular_categories
 CREATE TABLE IF NOT EXISTS `popular_categories` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `category_id` int(10) DEFAULT '0',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `category_id` int DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2012,9 +2012,9 @@ INSERT INTO `popular_categories` (`id`, `category_id`, `created_at`, `updated_at
 
 -- Listage de la structure de la table bmflash. popular_posts
 CREATE TABLE IF NOT EXISTS `popular_posts` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `blog_id` int(11) NOT NULL,
-  `status` int(11) NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `blog_id` int NOT NULL,
+  `status` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2031,36 +2031,36 @@ INSERT INTO `popular_posts` (`id`, `blog_id`, `status`, `created_at`, `updated_a
 
 -- Listage de la structure de la table bmflash. products
 CREATE TABLE IF NOT EXISTS `products` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `short_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `thumb_image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `vendor_id` int(11) NOT NULL DEFAULT '0',
-  `category_id` int(11) NOT NULL,
-  `sub_category_id` int(11) NOT NULL DEFAULT '0',
-  `child_category_id` int(11) NOT NULL DEFAULT '0',
-  `brand_id` int(11) NOT NULL DEFAULT '0',
-  `qty` int(11) NOT NULL DEFAULT '0',
-  `weight` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
-  `sold_qty` int(11) NOT NULL DEFAULT '0',
-  `short_description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `long_description` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `video_link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sku` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `seo_title` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `seo_description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `short_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `thumb_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `vendor_id` int NOT NULL DEFAULT '0',
+  `category_id` int NOT NULL,
+  `sub_category_id` int NOT NULL DEFAULT '0',
+  `child_category_id` int NOT NULL DEFAULT '0',
+  `brand_id` int NOT NULL DEFAULT '0',
+  `qty` int NOT NULL DEFAULT '0',
+  `weight` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `sold_qty` int NOT NULL DEFAULT '0',
+  `short_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `long_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `video_link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sku` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `seo_title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `seo_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` double NOT NULL,
   `offer_price` double DEFAULT NULL,
-  `tags` text COLLATE utf8mb4_unicode_ci,
-  `show_homepage` tinyint(4) NOT NULL DEFAULT '0',
-  `is_undefine` tinyint(4) NOT NULL DEFAULT '0',
-  `is_featured` tinyint(4) NOT NULL DEFAULT '0',
-  `new_product` tinyint(4) NOT NULL DEFAULT '0',
-  `is_top` tinyint(4) NOT NULL DEFAULT '0',
-  `is_best` tinyint(4) NOT NULL DEFAULT '0',
-  `status` tinyint(4) NOT NULL DEFAULT '0',
-  `is_specification` int(10) NOT NULL DEFAULT '1',
+  `tags` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `show_homepage` tinyint NOT NULL DEFAULT '0',
+  `is_undefine` tinyint NOT NULL DEFAULT '0',
+  `is_featured` tinyint NOT NULL DEFAULT '0',
+  `new_product` tinyint NOT NULL DEFAULT '0',
+  `is_top` tinyint NOT NULL DEFAULT '0',
+  `is_best` tinyint NOT NULL DEFAULT '0',
+  `status` tinyint NOT NULL DEFAULT '0',
+  `is_specification` int NOT NULL DEFAULT '1',
   `approve_by_admin` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -2109,10 +2109,10 @@ INSERT INTO `products` (`id`, `name`, `short_name`, `slug`, `thumb_image`, `vend
 
 -- Listage de la structure de la table bmflash. product_galleries
 CREATE TABLE IF NOT EXISTS `product_galleries` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(10) NOT NULL DEFAULT '1',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2160,12 +2160,12 @@ INSERT INTO `product_galleries` (`id`, `product_id`, `image`, `status`, `created
 
 -- Listage de la structure de la table bmflash. product_reports
 CREATE TABLE IF NOT EXISTS `product_reports` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `seller_id` int(11) NOT NULL DEFAULT '0',
-  `subject` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `seller_id` int NOT NULL DEFAULT '0',
+  `subject` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2177,13 +2177,13 @@ CREATE TABLE IF NOT EXISTS `product_reports` (
 
 -- Listage de la structure de la table bmflash. product_reviews
 CREATE TABLE IF NOT EXISTS `product_reviews` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `product_vendor_id` int(11) NOT NULL DEFAULT '0',
-  `review` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rating` int(11) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `user_id` int NOT NULL DEFAULT '0',
+  `product_vendor_id` int NOT NULL DEFAULT '0',
+  `review` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rating` int NOT NULL,
+  `status` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2205,10 +2205,10 @@ INSERT INTO `product_reviews` (`id`, `product_id`, `user_id`, `product_vendor_id
 
 -- Listage de la structure de la table bmflash. product_specifications
 CREATE TABLE IF NOT EXISTS `product_specifications` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) NOT NULL,
-  `product_specification_key_id` int(11) NOT NULL,
-  `specification` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `product_specification_key_id` int NOT NULL,
+  `specification` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2220,9 +2220,9 @@ CREATE TABLE IF NOT EXISTS `product_specifications` (
 
 -- Listage de la structure de la table bmflash. product_specification_keys
 CREATE TABLE IF NOT EXISTS `product_specification_keys` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2236,10 +2236,10 @@ INSERT INTO `product_specification_keys` (`id`, `key`, `status`, `created_at`, `
 
 -- Listage de la structure de la table bmflash. product_variants
 CREATE TABLE IF NOT EXISTS `product_variants` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `product_id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2253,14 +2253,14 @@ INSERT INTO `product_variants` (`id`, `product_id`, `name`, `status`, `created_a
 
 -- Listage de la structure de la table bmflash. product_variant_items
 CREATE TABLE IF NOT EXISTS `product_variant_items` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `product_variant_id` int(11) NOT NULL,
-  `product_variant_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `product_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `product_variant_id` int NOT NULL,
+  `product_variant_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `price` double NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `is_default` int(11) NOT NULL DEFAULT '0',
+  `status` int NOT NULL DEFAULT '1',
+  `is_default` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2272,11 +2272,11 @@ CREATE TABLE IF NOT EXISTS `product_variant_items` (
 
 -- Listage de la structure de la table bmflash. pusher_credentails
 CREATE TABLE IF NOT EXISTS `pusher_credentails` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `app_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `app_key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `app_secret` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `app_cluster` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `app_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `app_key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `app_secret` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `app_cluster` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2290,17 +2290,17 @@ INSERT INTO `pusher_credentails` (`id`, `app_id`, `app_key`, `app_secret`, `app_
 
 -- Listage de la structure de la table bmflash. razorpay_payments
 CREATE TABLE IF NOT EXISTS `razorpay_payments` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `status` int NOT NULL DEFAULT '0',
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `currency_rate` double NOT NULL DEFAULT '1',
-  `country_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `currency_code` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `key` text COLLATE utf8mb4_unicode_ci,
-  `secret_key` text COLLATE utf8mb4_unicode_ci,
+  `country_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `currency_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `key` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `secret_key` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2314,10 +2314,10 @@ INSERT INTO `razorpay_payments` (`id`, `status`, `name`, `currency_rate`, `count
 
 -- Listage de la structure de la table bmflash. seller_mail_logs
 CREATE TABLE IF NOT EXISTS `seller_mail_logs` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `seller_id` int(11) NOT NULL,
-  `subject` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `message` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `seller_id` int NOT NULL,
+  `subject` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2329,15 +2329,15 @@ CREATE TABLE IF NOT EXISTS `seller_mail_logs` (
 
 -- Listage de la structure de la table bmflash. seller_withdraws
 CREATE TABLE IF NOT EXISTS `seller_withdraws` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `seller_id` int(11) NOT NULL,
-  `method` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `seller_id` int NOT NULL,
+  `method` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `total_amount` double NOT NULL,
   `withdraw_amount` double NOT NULL,
   `withdraw_charge` double NOT NULL,
-  `account_info` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `approved_date` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `account_info` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int NOT NULL DEFAULT '0',
+  `approved_date` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2349,10 +2349,10 @@ CREATE TABLE IF NOT EXISTS `seller_withdraws` (
 
 -- Listage de la structure de la table bmflash. seo_settings
 CREATE TABLE IF NOT EXISTS `seo_settings` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `page_name` text COLLATE utf8mb4_unicode_ci,
-  `seo_title` text COLLATE utf8mb4_unicode_ci,
-  `seo_description` text COLLATE utf8mb4_unicode_ci,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `page_name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `seo_title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `seo_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2361,7 +2361,7 @@ CREATE TABLE IF NOT EXISTS `seo_settings` (
 -- Listage des données de la table bmflash.seo_settings : ~7 rows (environ)
 /*!40000 ALTER TABLE `seo_settings` DISABLE KEYS */;
 INSERT INTO `seo_settings` (`id`, `page_name`, `seo_title`, `seo_description`, `created_at`, `updated_at`) VALUES
-	(1, 'Home Page', 'Home - Welcome to ShopO', 'A best ecommerce script', NULL, '2022-11-01 21:49:33'),
+	(1, 'Home Page', 'Home - Welcome to BM-FLASH', 'A best ecommerce script', NULL, '2023-02-03 20:34:17'),
 	(2, 'About Us', 'About Us - Ecommerce', 'About Us', NULL, '2022-02-07 03:39:59'),
 	(3, 'Contact Us', 'Contact Us - Ecommerce', 'Contact Us', NULL, '2022-01-12 03:21:46'),
 	(5, 'Seller Page', 'Our Seller - Ecommerce', 'Seller Page', NULL, '2022-02-07 03:40:16'),
@@ -2372,11 +2372,11 @@ INSERT INTO `seo_settings` (`id`, `page_name`, `seo_title`, `seo_description`, `
 
 -- Listage de la structure de la table bmflash. services
 CREATE TABLE IF NOT EXISTS `services` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `icon` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` tinyint(4) NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` tinyint NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2393,62 +2393,62 @@ INSERT INTO `services` (`id`, `title`, `icon`, `description`, `status`, `created
 
 -- Listage de la structure de la table bmflash. settings
 CREATE TABLE IF NOT EXISTS `settings` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `maintenance_mode` int(11) NOT NULL DEFAULT '0',
-  `logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `favicon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `contact_email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `enable_user_register` int(11) NOT NULL DEFAULT '1',
-  `enable_multivendor` int(11) NOT NULL DEFAULT '1',
-  `enable_subscription_notify` int(11) NOT NULL DEFAULT '1',
-  `enable_save_contact_message` int(11) NOT NULL DEFAULT '1',
-  `text_direction` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'LTR',
-  `timezone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `default_language` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'en',
-  `sidebar_lg_header` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sidebar_sm_header` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `topbar_phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `topbar_email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `currency_name` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `currency_icon` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `maintenance_mode` int NOT NULL DEFAULT '0',
+  `logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `favicon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contact_email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `enable_user_register` int NOT NULL DEFAULT '1',
+  `enable_multivendor` int NOT NULL DEFAULT '1',
+  `enable_subscription_notify` int NOT NULL DEFAULT '1',
+  `enable_save_contact_message` int NOT NULL DEFAULT '1',
+  `text_direction` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'LTR',
+  `timezone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `default_language` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'en',
+  `sidebar_lg_header` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sidebar_sm_header` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `topbar_phone` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `topbar_email` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `currency_name` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `currency_icon` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `currency_rate` double NOT NULL DEFAULT '1',
-  `show_product_progressbar` int(1) NOT NULL DEFAULT '1',
-  `theme_one` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `theme_two` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `seller_condition` longtext COLLATE utf8mb4_unicode_ci,
-  `popular_category` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Popular Category',
-  `popular_category_product_qty` int(10) NOT NULL DEFAULT '9',
-  `frontend_url` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `popular_category_banner` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `featured_category_banner` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `homepage_section_title` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `empty_cart` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `empty_wishlist` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `change_password_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `become_seller_avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `become_seller_banner` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `login_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `error_page` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `show_product_progressbar` int NOT NULL DEFAULT '1',
+  `theme_one` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `theme_two` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `seller_condition` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `popular_category` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Popular Category',
+  `popular_category_product_qty` int NOT NULL DEFAULT '9',
+  `frontend_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `popular_category_banner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `featured_category_banner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `homepage_section_title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empty_cart` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `empty_wishlist` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `change_password_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `become_seller_avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `become_seller_banner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `login_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `error_page` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table bmflash.settings : ~1 rows (environ)
+-- Listage des données de la table bmflash.settings : ~0 rows (environ)
 /*!40000 ALTER TABLE `settings` DISABLE KEYS */;
 INSERT INTO `settings` (`id`, `maintenance_mode`, `logo`, `favicon`, `contact_email`, `enable_user_register`, `enable_multivendor`, `enable_subscription_notify`, `enable_save_contact_message`, `text_direction`, `timezone`, `default_language`, `sidebar_lg_header`, `sidebar_sm_header`, `topbar_phone`, `topbar_email`, `currency_name`, `currency_icon`, `currency_rate`, `show_product_progressbar`, `theme_one`, `theme_two`, `seller_condition`, `popular_category`, `popular_category_product_qty`, `frontend_url`, `popular_category_banner`, `featured_category_banner`, `homepage_section_title`, `empty_cart`, `empty_wishlist`, `change_password_image`, `become_seller_avatar`, `become_seller_banner`, `login_image`, `error_page`, `created_at`, `updated_at`) VALUES
-	(1, 1, 'uploads/website-images/logo-2022-11-22-11-19-02-4634.png', 'uploads/website-images/favicon-2022-09-20-09-51-23-8334.png', 'admin@quomodosoft.xyz', 1, 1, 1, 1, 'ltr', 'Africa/Douala', 'en', 'BmFlash', 'Bf', '123-854-7896', 'contact@gmail.com', 'USD', '$', 85.76, 0, '#1ee41b', '#b1a306', '<p><span style="color: rgb(0, 0, 0); font-family: Geomanist, &quot;Open Sans&quot;, arial, sans-serif; font-size: 16px;"><b>“Terms and Conditions</b>”&nbsp;means these “General Terms and Conditions for the Sale of Products or Services”, together with any modifications or additional provisions specifically stated in Seller’s final quotation or specifically agreed upon by Seller in writing.</span><br style="color: rgb(0, 0, 0); font-family: Geomanist, &quot;Open Sans&quot;, arial, sans-serif; font-size: 16px;"><span style="color: rgb(0, 0, 0); font-family: Geomanist, &quot;Open Sans&quot;, arial, sans-serif; font-size: 16px;">2. Delivery and Shipping Terms.</span><br style="color: rgb(0, 0, 0); font-family: Geomanist, &quot;Open Sans&quot;, arial, sans-serif; font-size: 16px;"><span style="color: rgb(0, 0, 0); font-family: Geomanist, &quot;Open Sans&quot;, arial, sans-serif; font-size: 16px;">(a) For shipments that do not involve export Seller shall deliver Products to Buyer F.O.B. shipping point. For export shipments, Seller shall deliver Products to Buyer EXW Seller’s facility or warehouse (Incoterms 2010). Buyer shall pay all delivery costs and charges or pay Seller’s standard shipping charges plus handling. Partial deliveries are permitted. Seller may deliver Products in advance of the delivery schedule. Delivery times are approximate and are dependent upon prompt receipt by Seller of all information necessary to proceed with the work without interruption. If Products delivered do not correspond in quantity, type or price to those itemized in the shipping invoice or documentation, Buyer shall so notify Seller within ten (10) days after receipt.</span><br style="color: rgb(0, 0, 0); font-family: Geomanist, &quot;Open Sans&quot;, arial, sans-serif; font-size: 16px;"><span style="color: rgb(0, 0, 0); font-family: Geomanist, &quot;Open Sans&quot;, arial, sans-serif; font-size: 16px;">(b) For shipments that do not involve export, title to Products shall pass to Buyer upon delivery in accordance with Section 2(a). For export shipments from a Seller facility or warehouse outside the U.S., title shall pass to Buyer upon delivery in accordance with Section 2(a). For shipments from the U.S. to another country, title shall pass to Buyer immediately after each item departs from the territorial land, seas and overlying airspace of the U.S. The 1982 United Nations Convention of the law of the Sea shall apply to determine the U.S. territorial seas. For all other shipments, title to Products shall pass to Buyer the earlier of (i) the port of export immediately after Products have been cleared for export or (ii) immediately after each item departs from the territorial land, seas and overlying airspace of the sending country. When Buyer arranges the export shipment, Buyer will provide Seller evidence of exportation acceptable to the relevant tax and custom authorities.</span><br style="color: rgb(0, 0, 0); font-family: Geomanist, &quot;Open Sans&quot;, arial, sans-serif; font-size: 16px;"><span style="color: rgb(0, 0, 0); font-family: Geomanist, &quot;Open Sans&quot;, arial, sans-serif; font-size: 16px;">(c) Risk of loss shall pass to Buyer upon delivery pursuant to Section 2(a), except that for export shipments from the U.S., risk of loss shall transfer to Buyer upon title passage.</span><br></p>', 'Popular Category', 9, 'https://shopo-ecom.vercel.app/about', 'uploads/website-images/popular-cat-banner-2022-09-20-01-15-44-7577.jpg', 'uploads/website-images/featured-cat-banner-2022-09-21-02-43-49-4710.jpg', '[{"key":"Trending_Category","default":"Trending Category","custom":"Trending Category"},{"key":"Popular_Category","default":"Popular Category","custom":"Popular Category"},{"key":"Shop_by_Brand","default":"Shop by Brand","custom":"Shop by Brand"},{"key":"Top_Rated_Products","default":"Top Rated Products","custom":"Top Rated Products"},{"key":"Best_Seller","default":"Best Seller","custom":"Best Seller"},{"key":"Featured_Products","default":"Featured Products","custom":"Featured Products"},{"key":"New_Arrivals","default":"New Arrivals","custom":"New Arrivals"},{"key":"Best_Products","default":"Best Products","custom":"Best Products"}]', 'uploads/website-images/empty_cart-2022-11-17-11-10-20-7795.png', 'uploads/website-images/empty_wishlist-2022-11-17-11-23-16-9350.png', 'uploads/website-images/change_password_image-2022-11-17-11-26-36-3416.png', 'uploads/website-images/become_seller_avatar-2022-11-17-11-38-55-7934.png', 'uploads/website-images/become_seller_banner-2022-11-17-11-41-53-5886.png', 'uploads/website-images/login_image-2022-11-17-11-07-21-2774.png', 'uploads/website-images/error_page-2022-11-17-11-27-36-6180.png', NULL, '2023-01-31 20:31:08');
+	(1, 1, 'uploads/website-images/logo-2023-02-25-03-45-27-6752.png', 'uploads/website-images/favicon-2022-09-20-09-51-23-8334.png', 'admin@quomodosoft.xyz', 1, 1, 1, 1, 'ltr', 'Africa/Douala', 'en', 'BmFlash', 'Bf', '123-854-7896', 'contact@gmail.com', 'XAF', 'XAF', 85.76, 0, '#1ee41b', '#b1a306', '<p><span style="color: rgb(0, 0, 0); font-family: Geomanist, &quot;Open Sans&quot;, arial, sans-serif; font-size: 16px;"><b>“Terms and Conditions</b>”&nbsp;means these “General Terms and Conditions for the Sale of Products or Services”, together with any modifications or additional provisions specifically stated in Seller’s final quotation or specifically agreed upon by Seller in writing.</span><br style="color: rgb(0, 0, 0); font-family: Geomanist, &quot;Open Sans&quot;, arial, sans-serif; font-size: 16px;"><span style="color: rgb(0, 0, 0); font-family: Geomanist, &quot;Open Sans&quot;, arial, sans-serif; font-size: 16px;">2. Delivery and Shipping Terms.</span><br style="color: rgb(0, 0, 0); font-family: Geomanist, &quot;Open Sans&quot;, arial, sans-serif; font-size: 16px;"><span style="color: rgb(0, 0, 0); font-family: Geomanist, &quot;Open Sans&quot;, arial, sans-serif; font-size: 16px;">(a) For shipments that do not involve export Seller shall deliver Products to Buyer F.O.B. shipping point. For export shipments, Seller shall deliver Products to Buyer EXW Seller’s facility or warehouse (Incoterms 2010). Buyer shall pay all delivery costs and charges or pay Seller’s standard shipping charges plus handling. Partial deliveries are permitted. Seller may deliver Products in advance of the delivery schedule. Delivery times are approximate and are dependent upon prompt receipt by Seller of all information necessary to proceed with the work without interruption. If Products delivered do not correspond in quantity, type or price to those itemized in the shipping invoice or documentation, Buyer shall so notify Seller within ten (10) days after receipt.</span><br style="color: rgb(0, 0, 0); font-family: Geomanist, &quot;Open Sans&quot;, arial, sans-serif; font-size: 16px;"><span style="color: rgb(0, 0, 0); font-family: Geomanist, &quot;Open Sans&quot;, arial, sans-serif; font-size: 16px;">(b) For shipments that do not involve export, title to Products shall pass to Buyer upon delivery in accordance with Section 2(a). For export shipments from a Seller facility or warehouse outside the U.S., title shall pass to Buyer upon delivery in accordance with Section 2(a). For shipments from the U.S. to another country, title shall pass to Buyer immediately after each item departs from the territorial land, seas and overlying airspace of the U.S. The 1982 United Nations Convention of the law of the Sea shall apply to determine the U.S. territorial seas. For all other shipments, title to Products shall pass to Buyer the earlier of (i) the port of export immediately after Products have been cleared for export or (ii) immediately after each item departs from the territorial land, seas and overlying airspace of the sending country. When Buyer arranges the export shipment, Buyer will provide Seller evidence of exportation acceptable to the relevant tax and custom authorities.</span><br style="color: rgb(0, 0, 0); font-family: Geomanist, &quot;Open Sans&quot;, arial, sans-serif; font-size: 16px;"><span style="color: rgb(0, 0, 0); font-family: Geomanist, &quot;Open Sans&quot;, arial, sans-serif; font-size: 16px;">(c) Risk of loss shall pass to Buyer upon delivery pursuant to Section 2(a), except that for export shipments from the U.S., risk of loss shall transfer to Buyer upon title passage.</span><br></p>', 'Popular Category', 9, 'https://shopo-ecom.vercel.app/about', 'uploads/website-images/popular-cat-banner-2022-09-20-01-15-44-7577.jpg', 'uploads/website-images/featured-cat-banner-2022-09-21-02-43-49-4710.jpg', '[{"key":"Trending_Category","default":"Trending Category","custom":"Trending Category"},{"key":"Popular_Category","default":"Popular Category","custom":"Popular Category"},{"key":"Shop_by_Brand","default":"Shop by Brand","custom":"Shop by Brand"},{"key":"Top_Rated_Products","default":"Top Rated Products","custom":"Top Rated Products"},{"key":"Best_Seller","default":"Best Seller","custom":"Best Seller"},{"key":"Featured_Products","default":"Featured Products","custom":"Featured Products"},{"key":"New_Arrivals","default":"New Arrivals","custom":"New Arrivals"},{"key":"Best_Products","default":"Best Products","custom":"Best Products"}]', 'uploads/website-images/empty_cart-2022-11-17-11-10-20-7795.png', 'uploads/website-images/empty_wishlist-2022-11-17-11-23-16-9350.png', 'uploads/website-images/change_password_image-2022-11-17-11-26-36-3416.png', 'uploads/website-images/become_seller_avatar-2022-11-17-11-38-55-7934.png', 'uploads/website-images/become_seller_banner-2022-11-17-11-41-53-5886.png', 'uploads/website-images/login_image-2022-11-17-11-07-21-2774.png', 'uploads/website-images/error_page-2022-11-17-11-27-36-6180.png', NULL, '2023-02-25 15:45:28');
 /*!40000 ALTER TABLE `settings` ENABLE KEYS */;
 
 -- Listage de la structure de la table bmflash. shippings
 CREATE TABLE IF NOT EXISTS `shippings` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `city_id` int(11) NOT NULL,
-  `shipping_rule` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `city_id` int NOT NULL,
+  `shipping_rule` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `shipping_fee` double NOT NULL,
-  `condition_from` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `condition_to` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `condition_from` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `condition_to` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2463,13 +2463,13 @@ INSERT INTO `shippings` (`id`, `city_id`, `shipping_rule`, `type`, `shipping_fee
 
 -- Listage de la structure de la table bmflash. shopping_carts
 CREATE TABLE IF NOT EXISTS `shopping_carts` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
-  `qty` int(11) NOT NULL,
-  `coupon_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `product_id` int NOT NULL,
+  `qty` int NOT NULL,
+  `coupon_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `coupon_price` double NOT NULL,
-  `offer_type` int(11) NOT NULL,
+  `offer_type` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2487,10 +2487,10 @@ INSERT INTO `shopping_carts` (`id`, `user_id`, `product_id`, `qty`, `coupon_name
 
 -- Listage de la structure de la table bmflash. shopping_cart_variants
 CREATE TABLE IF NOT EXISTS `shopping_cart_variants` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `shopping_cart_id` int(11) NOT NULL,
-  `variant_id` int(10) NOT NULL,
-  `variant_item_id` int(10) NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `shopping_cart_id` int NOT NULL,
+  `variant_id` int NOT NULL,
+  `variant_item_id` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2502,15 +2502,15 @@ CREATE TABLE IF NOT EXISTS `shopping_cart_variants` (
 
 -- Listage de la structure de la table bmflash. shop_pages
 CREATE TABLE IF NOT EXISTS `shop_pages` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `header_one` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `header_two` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `title_one` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `title_two` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `banner` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `button_text` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` int(1) NOT NULL DEFAULT '1',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `header_one` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `header_two` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title_one` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title_two` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `banner` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `button_text` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int NOT NULL DEFAULT '1',
   `filter_price_range` double NOT NULL DEFAULT '10000',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -2525,15 +2525,15 @@ INSERT INTO `shop_pages` (`id`, `header_one`, `header_two`, `title_one`, `title_
 
 -- Listage de la structure de la table bmflash. sliders
 CREATE TABLE IF NOT EXISTS `sliders` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `badge` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `title_one` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `title_two` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `serial` int(11) NOT NULL DEFAULT '0',
-  `slider_location` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `product_slug` text COLLATE utf8mb4_unicode_ci,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `badge` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title_one` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `title_two` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int NOT NULL DEFAULT '0',
+  `serial` int NOT NULL DEFAULT '0',
+  `slider_location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `product_slug` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2549,15 +2549,15 @@ INSERT INTO `sliders` (`id`, `badge`, `title_one`, `title_two`, `image`, `status
 
 -- Listage de la structure de la table bmflash. social_login_information
 CREATE TABLE IF NOT EXISTS `social_login_information` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `is_facebook` int(11) NOT NULL DEFAULT '0',
-  `facebook_client_id` text COLLATE utf8mb4_unicode_ci,
-  `facebook_secret_id` text COLLATE utf8mb4_unicode_ci,
-  `is_gmail` int(11) NOT NULL DEFAULT '0',
-  `gmail_client_id` text COLLATE utf8mb4_unicode_ci,
-  `gmail_secret_id` text COLLATE utf8mb4_unicode_ci,
-  `facebook_redirect_url` text COLLATE utf8mb4_unicode_ci,
-  `gmail_redirect_url` text COLLATE utf8mb4_unicode_ci,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `is_facebook` int NOT NULL DEFAULT '0',
+  `facebook_client_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `facebook_secret_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `is_gmail` int NOT NULL DEFAULT '0',
+  `gmail_client_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `gmail_secret_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `facebook_redirect_url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `gmail_redirect_url` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2571,14 +2571,14 @@ INSERT INTO `social_login_information` (`id`, `is_facebook`, `facebook_client_id
 
 -- Listage de la structure de la table bmflash. sslcommerz_payments
 CREATE TABLE IF NOT EXISTS `sslcommerz_payments` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `store_id` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `store_password` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `mode` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `currency_rate` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `country_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `currency_code` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(1) NOT NULL DEFAULT '1',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `store_id` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `store_password` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mode` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `currency_rate` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `currency_code` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2592,14 +2592,14 @@ INSERT INTO `sslcommerz_payments` (`id`, `store_id`, `store_password`, `mode`, `
 
 -- Listage de la structure de la table bmflash. stripe_payments
 CREATE TABLE IF NOT EXISTS `stripe_payments` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `stripe_key` text COLLATE utf8mb4_unicode_ci,
-  `stripe_secret` text COLLATE utf8mb4_unicode_ci,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `status` int NOT NULL DEFAULT '0',
+  `stripe_key` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `stripe_secret` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `country_code` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `currency_code` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `country_code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `currency_code` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `currency_rate` double NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2612,11 +2612,11 @@ INSERT INTO `stripe_payments` (`id`, `status`, `stripe_key`, `stripe_secret`, `c
 
 -- Listage de la structure de la table bmflash. subscribers
 CREATE TABLE IF NOT EXISTS `subscribers` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `verified_token` text COLLATE utf8mb4_unicode_ci,
-  `is_verified` int(11) NOT NULL DEFAULT '0',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int NOT NULL DEFAULT '0',
+  `verified_token` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `is_verified` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2645,11 +2645,11 @@ INSERT INTO `subscribers` (`id`, `email`, `status`, `verified_token`, `is_verifi
 
 -- Listage de la structure de la table bmflash. sub_categories
 CREATE TABLE IF NOT EXISTS `sub_categories` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `category_id` int(10) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `category_id` int NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2671,11 +2671,11 @@ INSERT INTO `sub_categories` (`id`, `category_id`, `name`, `slug`, `status`, `cr
 
 -- Listage de la structure de la table bmflash. tawk_chats
 CREATE TABLE IF NOT EXISTS `tawk_chats` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `chat_link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `widget_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `property_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `chat_link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `widget_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `property_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2689,9 +2689,9 @@ INSERT INTO `tawk_chats` (`id`, `chat_link`, `widget_id`, `property_id`, `status
 
 -- Listage de la structure de la table bmflash. terms_and_conditions
 CREATE TABLE IF NOT EXISTS `terms_and_conditions` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `terms_and_condition` longtext COLLATE utf8mb4_unicode_ci,
-  `privacy_policy` longtext COLLATE utf8mb4_unicode_ci,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `terms_and_condition` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `privacy_policy` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2705,13 +2705,13 @@ INSERT INTO `terms_and_conditions` (`id`, `terms_and_condition`, `privacy_policy
 
 -- Listage de la structure de la table bmflash. testimonials
 CREATE TABLE IF NOT EXISTS `testimonials` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `designation` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `rating` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `comment` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` int(11) NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `designation` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rating` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `comment` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2728,16 +2728,16 @@ INSERT INTO `testimonials` (`id`, `name`, `designation`, `image`, `rating`, `com
 
 -- Listage de la structure de la table bmflash. three_column_categories
 CREATE TABLE IF NOT EXISTS `three_column_categories` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `category_id_one` int(11) NOT NULL DEFAULT '0',
-  `sub_category_id_one` int(11) NOT NULL DEFAULT '0',
-  `child_category_id_one` int(11) NOT NULL DEFAULT '0',
-  `category_id_two` int(11) NOT NULL DEFAULT '0',
-  `sub_category_id_two` int(11) NOT NULL DEFAULT '0',
-  `child_category_id_two` int(11) NOT NULL DEFAULT '0',
-  `category_id_three` int(11) NOT NULL DEFAULT '0',
-  `sub_category_id_three` int(11) NOT NULL DEFAULT '0',
-  `child_category_id_three` int(11) NOT NULL DEFAULT '0',
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `category_id_one` int NOT NULL DEFAULT '0',
+  `sub_category_id_one` int NOT NULL DEFAULT '0',
+  `child_category_id_one` int NOT NULL DEFAULT '0',
+  `category_id_two` int NOT NULL DEFAULT '0',
+  `sub_category_id_two` int NOT NULL DEFAULT '0',
+  `child_category_id_two` int NOT NULL DEFAULT '0',
+  `category_id_three` int NOT NULL DEFAULT '0',
+  `sub_category_id_three` int NOT NULL DEFAULT '0',
+  `child_category_id_three` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2751,34 +2751,34 @@ INSERT INTO `three_column_categories` (`id`, `category_id_one`, `sub_category_id
 
 -- Listage de la structure de la table bmflash. users
 CREATE TABLE IF NOT EXISTS `users` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `forget_password_token` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` int(10) NOT NULL DEFAULT '0',
-  `provider_id` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `provider` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `provider_avatar` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `image` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `country_id` int(10) DEFAULT '0',
-  `state_id` int(10) DEFAULT '0',
-  `city_id` int(10) DEFAULT '0',
-  `zip_code` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_vendor` int(10) NOT NULL DEFAULT '0',
-  `verify_token` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email_verified` int(1) NOT NULL DEFAULT '0',
-  `default_language` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'en',
-  `agree_policy` int(1) DEFAULT '0',
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `forget_password_token` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `status` int NOT NULL DEFAULT '0',
+  `provider_id` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `provider` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `provider_avatar` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `country_id` int DEFAULT '0',
+  `state_id` int DEFAULT '0',
+  `city_id` int DEFAULT '0',
+  `zip_code` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_vendor` int NOT NULL DEFAULT '0',
+  `verify_token` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_verified` int NOT NULL DEFAULT '0',
+  `default_language` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'en',
+  `agree_policy` int DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table bmflash.users : ~16 rows (environ)
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
@@ -2798,31 +2798,37 @@ INSERT INTO `users` (`id`, `name`, `email`, `email_verified_at`, `password`, `re
 	(14, 'Moses Haynes Short', 'cacixi5247@corylan.com', NULL, '$2y$10$SjifGqNkcVvFPhQuDFe8iebZ1KGkDpsRywLbCc3.mGA2rfp.3lO0.', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, 0, NULL, 1, 'en', 1, '2022-10-27 09:33:02', '2022-10-27 09:33:14'),
 	(15, 'Jason Mcneil', 'mehoke2377@sopulit.com', NULL, '$2y$10$Dpk9fNCaMpK4XI4OfdrRVO4cWPXR3DeIj1wg3CLqavI60UZP1Xdti', NULL, NULL, 1, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, 0, NULL, 1, 'en', 1, '2022-11-18 16:13:08', '2022-11-23 02:07:48'),
 	(16, 'Test Test', 'test@gmail.con', NULL, '$2y$10$N35xuiQ2nWwntEwfeTbPHe9eFsskk4C/xx.Z8hc0hhmkbvlo95rEi', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, 0, '976621', 0, 'en', 1, '2022-11-22 07:16:45', '2022-11-22 07:16:45'),
-	(17, 'suraj c', 's@g.com', NULL, '$2y$10$/ya3vIvGKDW3MDZxFfB39uvYYCJD20fX7jUg52FX6fBks2ZHkVsum', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, 0, '522603', 0, 'en', 1, '2022-11-23 02:45:44', '2022-11-23 02:45:44');
+	(17, 'suraj c', 's@g.com', NULL, '$2y$10$/ya3vIvGKDW3MDZxFfB39uvYYCJD20fX7jUg52FX6fBks2ZHkVsum', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, 0, '522603', 0, 'en', 1, '2022-11-23 02:45:44', '2022-11-23 02:45:44'),
+	(18, 'Bert Andrews', 'nomuhanak@mailinator.com', NULL, '$2y$10$8Hj7YiFL0EPyRDtDO./FjeZvV189g7L/2zlroWBc.pZ.TYp4YAhPq', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, 0, '218730', 0, 'en', 1, '2023-02-22 21:39:23', '2023-02-22 21:39:23'),
+	(19, 'Cora Monroe', 'piterih@mailinator.com', NULL, '$2y$10$kLMex6guRVGQJZmcl/zI9eMOUDRzFsXRROpPXWZ7wORjI2BC8946y', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, 0, '806600', 0, 'en', 1, '2023-02-22 21:40:40', '2023-02-22 21:40:40'),
+	(20, 'Doris Stone', 'quvicim@mailinator.com', NULL, '$2y$10$zuC.OfJjlEyeGozee2/4LO3FZlPoi7zjGjjwuLTvq9SLukBlVnm0q', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, 0, '613408', 0, 'en', 1, '2023-02-22 21:41:23', '2023-02-22 21:41:23'),
+	(21, 'Carter Kemp', 'quje@mailinator.com', NULL, '$2y$10$4rve6VpbEmxXxYgAg6Hrg.xXPQEJWz.iUbrA3RGkqI/FW0jtaaKLW', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, 0, '720766', 0, 'en', 1, '2023-02-22 21:42:44', '2023-02-22 21:42:44'),
+	(22, 'Samankassou Nelle Sharp', 'samankassoufoulla@gmail.com', NULL, '$2y$10$K8O8karDly2I/2qUyqhM2Oxsd5r0gPwvyAn01UNUhJNbRsE57Hhn6', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, 0, '736375', 0, 'en', 1, '2023-02-22 21:47:36', '2023-02-22 21:47:36'),
+	(23, 'Samankassou Nelle Sharp', 'samankoufoulla@gmail.com', NULL, '$2y$10$XZzaPSImiQx3TLk5m/Ah5eYfJvuKtpVy3GcOx7ZOfTYH/aK/iotQm', NULL, NULL, 0, NULL, NULL, NULL, NULL, NULL, 0, 0, 0, NULL, NULL, 0, '123507', 0, 'en', 1, '2023-02-22 21:48:21', '2023-02-22 21:48:21');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Listage de la structure de la table bmflash. vendors
 CREATE TABLE IF NOT EXISTS `vendors` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
   `total_amount` double NOT NULL DEFAULT '0',
-  `banner_image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `logo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `phone` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `shop_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `slug` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `open_at` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `closed_at` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `address` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `seo_title` text COLLATE utf8mb4_unicode_ci,
-  `seo_description` text COLLATE utf8mb4_unicode_ci,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `is_featured` int(11) NOT NULL DEFAULT '0',
-  `top_rated` int(11) NOT NULL DEFAULT '0',
-  `verified_token` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `is_verified` int(11) NOT NULL DEFAULT '0',
-  `greeting_msg` text COLLATE utf8mb4_unicode_ci,
+  `banner_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `logo` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `phone` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `shop_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slug` varchar(191) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `open_at` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `closed_at` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `address` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `seo_title` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `seo_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `status` int NOT NULL DEFAULT '0',
+  `is_featured` int NOT NULL DEFAULT '0',
+  `top_rated` int NOT NULL DEFAULT '0',
+  `verified_token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `is_verified` int NOT NULL DEFAULT '0',
+  `greeting_msg` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2841,10 +2847,10 @@ INSERT INTO `vendors` (`id`, `user_id`, `total_amount`, `banner_image`, `logo`, 
 
 -- Listage de la structure de la table bmflash. vendor_social_links
 CREATE TABLE IF NOT EXISTS `vendor_social_links` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `vendor_id` int(11) NOT NULL,
-  `icon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `link` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `vendor_id` int NOT NULL,
+  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2856,9 +2862,9 @@ CREATE TABLE IF NOT EXISTS `vendor_social_links` (
 
 -- Listage de la structure de la table bmflash. wishlists
 CREATE TABLE IF NOT EXISTS `wishlists` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `product_id` int(11) NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `product_id` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -2873,13 +2879,13 @@ INSERT INTO `wishlists` (`id`, `user_id`, `product_id`, `created_at`, `updated_a
 
 -- Listage de la structure de la table bmflash. withdraw_methods
 CREATE TABLE IF NOT EXISTS `withdraw_methods` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id` bigint unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `min_amount` double NOT NULL DEFAULT '0',
   `max_amount` double NOT NULL DEFAULT '0',
   `withdraw_charge` double NOT NULL DEFAULT '0',
-  `description` text COLLATE utf8mb4_unicode_ci,
-  `status` int(11) NOT NULL DEFAULT '1',
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `status` int NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
