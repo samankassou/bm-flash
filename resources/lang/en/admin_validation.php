@@ -1,5 +1,5 @@
 <?php
- return array (
+return array(
   'Description is required' => 'Description is required',
   'Updated Successfully' => 'Updated Successfully',
   'Banner is required' => 'Banner is required',
@@ -17,6 +17,7 @@
   'Confirm password does not match' => 'Confirm password does not match',
   'Link is required' => 'Link is required',
   'Status is required' => 'Status is required',
+  'Is VIP is required' => 'Is VIP is required',
   'Play store link is required' => 'Play store link is required',
   'App store link is required' => 'App store link is required',
   'After product quantity is required' => 'After product quantity is required',

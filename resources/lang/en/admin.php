@@ -14,6 +14,7 @@ return array(
   'Name' => 'Name',
   'Email' => 'Email',
   'Status' => 'Status',
+  'VIP' => 'VIP',
   'Action' => 'Action',
   'Active' => 'Active',
   'Inactive' => 'Inactive',
